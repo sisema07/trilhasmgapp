@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const qrReaderDiv = document.getElementById('reader');
     const qrReaderCloseBtn = document.getElementById('reader-close-btn');
     let html5QrCode = null;
+    renderParkList();
     
     // Funções de Navegação
     function navigateTo(viewId) {
@@ -159,5 +160,68 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProfileDisplay(initialXP);
     console.log(`✅ Projeto iniciado. Dados dos Parques carregados (incorporados). Total: ${PARKS_DATA.length}`);
 });
+}
+// ====================================================================
+// PARTE 6: RENDERIZAÇÃO DA LISTA DE PARQUES (Adicionar ao app.js)
+// ====================================================================
+
+/**
+ * Função para criar o HTML de um Card de Parque
+ * @param {object} park - O objeto de dados do parque
+ * @returns {string} HTML do card.
+ */
+function createParkCardHTML(park) {
+    const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
+    const isVisited = visits.includes(park.id);
+    const visitStatus = isVisited ? 'Visitado' : 'A visitar';
+    const statusClass = isVisited ? 'visited' : 'to-visit';
+    
+    // O design do card é baseado no card já existente na home
+    return `
+        <div class="card park-list-card ${statusClass}" data-park-id="${park.id}">
+            <div class="card-header">
+                <h3>${park.nome}</h3>
+                <span class="park-status status-${statusClass}">${visitStatus}</span>
+            </div>
+            <p>${park.resumo}</p>
+            <div class="card-footer">
+                <button class="btn btn-secondary btn-small view-details" data-park-id="${park.id}">Ver Detalhes</button>
+            </div>
+        </div>
+    `;
+}
+
+/**
+ * Função que pega os dados e insere os cards na view de lista.
+ */
+function renderParkList() {
+    const listView = document.getElementById('list-view');
+    
+    // Encontra o contêiner de conteúdo dentro da list-view
+    const parkContentContainer = listView.querySelector('.park-content'); 
+
+    if (!parkContentContainer) {
+        // Se a list-view não tiver a classe .park-content (como fizemos nos placeholders), 
+        // criamos a lista diretamente.
+        console.error("Contêiner .park-content não encontrado. Renderizando diretamente.");
+        listView.innerHTML = `<h1 class="park-title">Todos os Parques</h1><div id="park-cards-container"></div>`;
+        const container = document.getElementById('park-cards-container');
+
+        // Loop para gerar todos os cards
+        PARKS_DATA.forEach(park => {
+            container.innerHTML += createParkCardHTML(park);
+        });
+        
+    } else {
+        // Se já tiver o contêiner .park-content, inserimos a lista após o título
+        let listHTML = '';
+        PARKS_DATA.forEach(park => {
+            listHTML += createParkCardHTML(park);
+        });
+        parkContentContainer.innerHTML += listHTML; 
+    }
+    
+    console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista.`);
+}
 
 
