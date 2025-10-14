@@ -388,6 +388,59 @@ function createParkCardHTML(park) {
     `;
 }
 
+// ====================================================================
+// PARTE 7: RENDERIZAÇÃO DA TELA DE DETALHES
+// ====================================================================
+
+/**
+ * Função que preenche a tela de detalhes com os dados do parque.
+ * @param {object} park - O objeto de dados do parque.
+ */
+function renderParkDetail(park) {
+    const detailView = document.getElementById('detail-view');
+    
+    const heroImage = detailView.querySelector('.hero-image');
+    if (heroImage) {
+        heroImage.style.backgroundImage = `url('/trilhasmgapp/assets/img/${park.id}_hero.jpg')`; 
+    }
+
+    detailView.querySelector('.park-title').innerText = park.nome;
+
+    const tabContent = detailView.querySelector('.tab-content.active');
+    if (tabContent) {
+        tabContent.innerHTML = `
+            <h3>Resumo</h3>
+            <p>${park.resumo}</p>
+            <h3>Infraestrutura</h3>
+            <ul class="infra-list">
+                ${park.infraestrutura ? park.infraestrutura.map(item => `<li><i class="fas fa-check-circle"></i> ${item}</li>`).join('') : '<li>Nenhuma informação de infraestrutura detalhada.</li>'}
+            </ul>
+            <p style="margin-top: 10px;">Status: <strong>${park.status_operacao || 'Não informado'}</strong></p>
+        `;
+    }
+
+    // Navega para a tela de detalhes APÓS preencher os dados
+    navigateTo('detail-view');
+}
+
+/**
+ * Função que ativa os event listeners para o botão 'Ver Detalhes'.
+ */
+function setupCardListeners() {
+    const detailButtons = document.querySelectorAll('.view-details');
+    
+    detailButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const parkId = e.currentTarget.getAttribute('data-park-id');
+            const selectedPark = PARKS_DATA.find(p => p.id === parkId);
+            
+            if (selectedPark) {
+                renderParkDetail(selectedPark);
+            }
+        });
+    });
+}
+
 function renderParkList() {
     const listView = document.getElementById('list-view');
     if (!listView) {
@@ -402,7 +455,8 @@ function renderParkList() {
     });
 
     listView.innerHTML = listHTML;
-    console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista.`);
+    setupCardListeners(); // Ativa os cliques em 'Ver Detalhes'
+console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista. Listeners Ativados.`);
 }
 
 // ====================================================================
@@ -494,7 +548,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 2. Renderiza a lista de parques na View (Solução para o problema)
     renderParkList();
+    setupCardListeners();   
 
     console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
 });
+
 
