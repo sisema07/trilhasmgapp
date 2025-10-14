@@ -1,186 +1,105 @@
 // VARIÁVEL GLOBAL PARA ARMAZENAR OS DADOS DOS PARQUES
-let PARKS_DATA = [];
-let html5QrCode = null; // Instância global para o leitor de QR Code
+// **DADOS INCORPORADOS DIRETAMENTE NO JS (SOLUÇÃO FINAL PARA O ERRO 404)**
+const PARKS_DATA = [
+    {
+        "id": "biribiri",
+        "nome": "Biribiri",
+        "municipios": ["Diamantina"],
+        "regiao": "Alto Jequitinhonha",
+        "coordenadas_base": { "latitude": -18.2500, "longitude": -43.6000 },
+        "geofence_raio_m": 500,
+        "resumo": "Antiga vila têxtil, com cachoeiras e paisagens do Cerrado e Campos Rupestres.",
+        "infraestrutura": ["Trilhas", "Cachoeiras", "Antiga Vila Histórica"],
+        "status_operacao": "Aberto",
+        "link_agendamento": "url_do_site_do_IEF_ou_concessionaria",
+        "pontos_interesse": [
+            { "poi_id": "vilabiribiri", "nome": "Vila de Biribiri", "tipo": "Historico", "latitude": -18.2520, "longitude": -43.6050, "quiz_id": "quiz_biribiri_01", "desc_curta": "O coração histórico do parque." },
+            { "poi_id": "cachoeira_sentinela", "nome": "Cachoeira da Sentinela", "tipo": "Natural", "latitude": -18.2600, "longitude": -43.6100, "quiz_id": null, "desc_curta": "Um belo ponto para a foto de conquista." }
+        ],
+        "badges_exclusivos": ["Selo_Biribiri_Visita", "Badge_Arquiteto_da_Historia"]
+    },
+    {
+        "id": "ibitipoca",
+        "nome": "Ibitipoca",
+        "municipios": ["Lima Duarte", "Santa Rita de Ibitipoca"],
+        "regiao": "Zona da Mata",
+        "coordenadas_base": { "latitude": -21.7142, "longitude": -43.8967 },
+        "geofence_raio_m": 800,
+        "resumo": "Famoso por picos, grutas e a Janela do Céu.",
+        "infraestrutura": ["Trilhas (Circuitos)", "Camping", "Centro de Visitantes"],
+        "status_operacao": "Aberto (com limite de visitação)",
+        "link_agendamento": "url_de_agendamento_ibitipoca",
+        "pontos_interesse": [
+            { "poi_id": "janeladoceu", "nome": "Janela do Céu", "tipo": "Natural", "latitude": -21.7300, "longitude": -43.8850, "quiz_id": "quiz_ibitipoca_01", "desc_curta": "A vista mais icônica do parque." },
+            { "poi_id": "pico_piao", "nome": "Pico do Pião", "tipo": "Natural", "latitude": -21.7250, "longitude": -43.8900, "quiz_id": null, "desc_curta": "Ponto de maior altitude do Circuito do Pião." }
+        ],
+        "badges_exclusivos": ["Selo_Ibitipoca_Visita", "Badge_Mestre_das_Grutas"]
+    }
+    // NOTA: Os outros 17 parques devem ser adicionados aqui no futuro.
+];
 
 // ====================================================================
-// PARTE 1: NAVEGAÇÃO E CONTROLE DE TELA
+// O RESTANTE DO CÓDIGO (PARTE 1, 3, 4, 5) SEGUE ABAIXO...
+// ... (Toda a sua lógica de Navegação, QR Code e Armazenamento Local)
 // ====================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Referências para os elementos DOM
     const views = document.querySelectorAll('.view');
     const navItems = document.querySelectorAll('.nav-item');
     const btnBack = document.querySelector('.btn-back');
     const fab = document.querySelector('.fab');
     const qrReaderDiv = document.getElementById('reader');
     const qrReaderCloseBtn = document.getElementById('reader-close-btn');
-
-    /**
-     * Função para mostrar a view correta e atualizar a navegação inferior.
-     */
+    let html5QrCode = null;
+    
+    // Funções de Navegação
     function navigateTo(viewId) {
-        views.forEach(view => {
-            view.classList.add('hidden');
-        });
+        views.forEach(view => { view.classList.add('hidden'); });
         document.getElementById(viewId).classList.remove('hidden');
-
         navItems.forEach(item => {
             item.classList.remove('active');
-            if (item.getAttribute('href').includes(viewId)) {
-                item.classList.add('active');
-            }
+            if (item.getAttribute('href').includes(viewId)) { item.classList.add('active'); }
         });
     }
 
-    // Event Listeners para Navegação
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const viewId = item.getAttribute('href').substring(1); 
-            navigateTo(viewId);
-        });
-    });
-    
-    if (btnBack) {
-        btnBack.addEventListener('click', () => {
-            navigateTo('home-view');
-        });
-    }
-
-    // Simulação de clique para ir para a tela de Detalhes
+    navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
+    if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('home-view'); }); }
     const featuredCard = document.querySelector('.featured-card .btn-secondary');
-    if (featuredCard) {
-        featuredCard.addEventListener('click', () => {
-            navigateTo('detail-view');
-        });
-    }
+    if (featuredCard) { featuredCard.addEventListener('click', () => { navigateTo('detail-view'); }); }
 
-    // ====================================================================
-    // LÓGICA DO QR CODE
-    // ====================================================================
-
-    /**
-     * Inicia o leitor de QR Code (chamado pelo FAB)
-     */
+    // Funções de QR Code
     function startQrScanner() {
-        qrReaderDiv.style.display = 'flex'; // Torna a tela do scanner visível
+        qrReaderDiv.style.display = 'flex';
         document.getElementById('reader-status').innerText = "Aguardando leitura do QR Code...";
-
-        // Cria a instância do leitor se ainda não existir
-        if (!html5QrCode) {
-            html5QrCode = new Html5Qrcode("qr-reader-container");
-        }
-
+        if (!html5QrCode) { html5QrCode = new Html5Qrcode("qr-reader-container"); }
         const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-        html5QrCode.start(
-            { facingMode: "environment" }, // Usa a câmera traseira (ideal para celulares)
-            config,
-            onScanSuccess, // Função chamada ao ler um QR Code
-            (errorMessage) => {
-                // Erro (muitas vezes apenas que o código não foi detectado)
-                // console.log("QR Code not detected:", errorMessage);
-            }
-        ).catch((err) => {
-            document.getElementById('reader-status').innerText = `Erro ao acessar câmera: ${err}. Certifique-se de estar em HTTPS ou em localhost.`;
-            console.error("Erro ao iniciar câmera:", err);
-        });
+        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, (errorMessage) => {});
     }
-
-    /**
-     * Fecha o leitor de QR Code
-     */
     function stopQrScanner() {
-        if (html5QrCode && html5QrCode.isScanning) {
-            html5QrCode.stop().then(() => {
-                qrReaderDiv.style.display = 'none';
-            }).catch(err => {
-                console.error("Erro ao parar a câmera:", err);
-                qrReaderDiv.style.display = 'none'; // Força o fechamento visual
-            });
-        } else {
-            qrReaderDiv.style.display = 'none';
-        }
+        if (html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().then(() => { qrReaderDiv.style.display = 'none'; }).catch(err => { qrReaderDiv.style.display = 'none'; }); } else { qrReaderDiv.style.display = 'none'; }
     }
-
-    /**
-     * Callback de sucesso após a leitura de um QR Code
-     * @param {string} decodedText - O texto lido do QR Code.
-     */
     function onScanSuccess(decodedText) {
-        // Interrompe a leitura assim que um código for detectado
         stopQrScanner(); 
-        
-        // Formato esperado: TRILHASMG_CHECKIN_[ID_DO_PARQUE]
         if (decodedText.startsWith("TRILHASMG_CHECKIN_")) {
-            const parkId = decodedText.split("_")[2].toLowerCase(); // Ex: 'ibitipoca'
+            const parkId = decodedText.split("_")[2].toLowerCase();
             const park = PARKS_DATA.find(p => p.id === parkId);
-
             if (park) {
                 processSuccessfulCheckin(park);
-            } else {
-                alert("❌ QR Code válido, mas o ID do parque é desconhecido.");
-            }
-        } else {
-            alert("❌ QR Code Inválido. Escaneie apenas códigos oficiais do Trilhas de Minas.");
-        }
+            } else { alert("❌ QR Code válido, mas o ID do parque é desconhecido."); }
+        } else { alert("❌ QR Code Inválido. Escaneie apenas códigos oficiais do Trilhas de Minas."); }
     }
-
-    // Event Listeners para o Scanner
-    if (fab) {
-        fab.addEventListener('click', startQrScanner);
-    }
-    if (qrReaderCloseBtn) {
-        qrReaderCloseBtn.addEventListener('click', stopQrScanner);
-    }
-
-
-    // ====================================================================
-    // PARTE 2: CARREGAMENTO DE DADOS (JSON LOCAL)
-    // ====================================================================
-
-    async function loadParkData() {
-        try {
-            const response = await fetch('/trilhasmgapp/pe_minas_data.json'); 
-            if (!response.ok) {
-                 throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const parks = await response.json();
-            PARKS_DATA = parks; 
-            
-            console.log('✅ Dados dos Parques carregados com sucesso (JSON Local). Total:', PARKS_DATA.length);
-            
-        } catch (error) {
-            console.error('❌ Erro ao carregar os dados do arquivo pe_minas_data.json:', error);
-            // Aviso de erro para o usuário (mantido da etapa anterior para diagnóstico)
-            alert('Erro fatal: Arquivo de dados dos parques não encontrado ou inválido. Use um servidor local (Live Server).'); 
-        }
-    }
-
-
-    // ====================================================================
-    // PARTE 4: PROCESSAMENTO DE CONQUISTA (USANDO localStorage)
-    // ====================================================================
-
-    /**
-     * Processa as recompensas e atualiza o estado do app após o Check-in.
-     */
+    if (fab) { fab.addEventListener('click', startQrScanner); }
+    if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
+    
+    // Processamento de Conquista
     function processSuccessfulCheckin(park) {
-        // 1. Armazenamento Local (simula o Back-end)
         const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
         const xp = parseInt(localStorage.getItem('userXP') || '0');
+        if (visits.includes(park.id)) { alert(`🎉 Bem-vindo de volta ao ${park.nome}! Visita registrada anteriormente.`); return; }
         
-        if (visits.includes(park.id)) {
-            alert(`🎉 Bem-vindo de volta ao ${park.nome}! Visita registrada anteriormente.`);
-            return;
-        }
-        
-        // Se for a primeira visita, registra
         visits.push(park.id);
         localStorage.setItem('userVisits', JSON.stringify(visits));
         
-        // 2. Recompensa
         const xpGained = 150; 
         const newXP = xp + xpGained;
         localStorage.setItem('userXP', newXP.toString());
@@ -196,33 +115,17 @@ document.addEventListener('DOMContentLoaded', () => {
         Total de Parques Visitados: ${visits.length}
         Total de XP: ${newXP}
         `);
-        
-        // Atualiza a interface (header XP)
         updateProfileDisplay(newXP);
     }
     
-    /**
-     * Atualiza o XP e o perfil na tela inicial.
-     */
     function updateProfileDisplay(currentXP) {
         const xpScoreElement = document.querySelector('.xp-score');
-        if (xpScoreElement) {
-            xpScoreElement.innerText = `${currentXP} XP`;
-        }
-        // Futuramente, a lista de badges e visitas seria atualizada aqui
+        if (xpScoreElement) { xpScoreElement.innerText = `${currentXP} XP`; }
     }
 
-    // ====================================================================
-    // PARTE 5: INICIALIZAÇÃO E CARREGAMENTO DE DADOS
-    // ====================================================================
-    
-    // Carrega o XP inicial do localStorage
+    // Inicialização
+    navigateTo('home-view');
     const initialXP = parseInt(localStorage.getItem('userXP') || '0');
     updateProfileDisplay(initialXP);
-    
-    // Carrega os dados dos parques
-    loadParkData();
-
+    console.log(`✅ Projeto iniciado. Dados dos Parques carregados (incorporados). Total: ${PARKS_DATA.length}`);
 });
-
-
