@@ -191,18 +191,38 @@ html, body {
     position: relative;
 }
 
+/* Estilo para o botão "Voltar" na tela de detalhes */
 .btn-back {
-    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente escuro */
+    color: #fff; /* Texto branco para contraste */
+    border: none;
+    border-radius: 20px; /* Bordas arredondadas */
+    padding: 8px 15px;
+    font-size: 0.9em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: absolute; /* Posição absoluta dentro do hero-image */
     top: 15px;
     left: 15px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: var(--color-text-light);
+    z-index: 10; /* Garante que ele fique acima da imagem */
+    backdrop-filter: blur(5px); /* Efeito de desfoque sutil (moderno) */
+    -webkit-backdrop-filter: blur(5px); /* Para compatibilidade com Safari */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra suave */
+    text-decoration: none; /* Para garantir que não haja sublinhado se virar link */
+}
+
+.btn-back i {
+    font-size: 1.1em;
+}
+
+/* Remover o estilo default do botão no HTML */
+.hero-image button.btn-back {
+    background: none; /* remove o fundo para o estilo do .btn-back ser aplicado */
     border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.2em;
-    cursor: pointer;
+    padding: 0;
+    margin: 0;
 }
 
 .park-content {
@@ -319,3 +339,4 @@ html, body {
     padding: 6px 10px;
     font-size: 0.8em;
 }
+
