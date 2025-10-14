@@ -1,0 +1,21 @@
+[
+  {
+    "quiz_id": "quiz_biribiri_01",
+    "park_id": "biribiri",
+    "titulo": "Teste de Conhecimento da Vila",
+    "perguntas": [
+      {
+        "pergunta": "Qual atividade econômica deu origem à Vila de Biribiri?",
+        "opcoes": ["Mineração de Ouro", "Cultura do Café", "Indústria Têxtil", "Extração de Diamantes"],
+        "resposta_correta": "Indústria Têxtil"
+      },
+      {
+        "pergunta": "Qual bioma predomina na região do Parque Estadual do Biribiri?",
+        "opcoes": ["Mata Atlântica", "Cerrado e Campos Rupestres", "Caatinga", "Pampa"],
+        "resposta_correta": "Cerrado e Campos Rupestres"
+      }
+    ],
+    "recompensa_badge": "Badge_Arquiteto_da_Historia"
+  }
+  // ... (Quizzes para outros Parques/POIs)
+]

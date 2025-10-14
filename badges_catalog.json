@@ -1,0 +1,27 @@
+[
+  {
+    "badge_code": "Selo_Ibitipoca_Visita",
+    "titulo": "Ibitipoca Desvendada",
+    "tipo": "Visita Obrigatória",
+    "descricao": "Conquistado ao realizar o check-in na entrada do PE Ibitipoca.",
+    "imagem_url": "/assets/badges/ibitipoca_selo.png",
+    "pontos_xp": 100
+  },
+  {
+    "badge_code": "Badge_Mestre_das_Grutas",
+    "titulo": "Mestre Espeleólogo",
+    "tipo": "Conquista de Rota",
+    "descricao": "Desbloqueado ao visitar 3 pontos de gruta nos Parques (Ibitipoca, Sumidouro, Lapa Grande).",
+    "imagem_url": "/assets/badges/mestre_grutas.png",
+    "pontos_xp": 500
+  },
+  {
+    "badge_code": "Lenda_das_Minas",
+    "titulo": "Lenda dos 19 PE's",
+    "tipo": "Coleção",
+    "descricao": "Conquistado após visitar todos os 19 Parques Estaduais de Minas Gerais.",
+    "imagem_url": "/assets/badges/lenda_minas.png",
+    "pontos_xp": 5000
+  }
+  // ... (Lista completa de todos os Badges)
+]
