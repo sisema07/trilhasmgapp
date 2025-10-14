@@ -1,5 +1,4 @@
-// VARIÁVEL GLOBAL PARA ARMAZENAR OS DADOS DOS PARQUES
-// **DADOS INCORPORADOS DIRETAMENTE NO JS (SOLUÇÃO FINAL PARA O ERRO 404)**
+
 const PARKS_DATA = [
     {
         "id": "biribiri",
@@ -160,4 +159,5 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProfileDisplay(initialXP);
     console.log(`✅ Projeto iniciado. Dados dos Parques carregados (incorporados). Total: ${PARKS_DATA.length}`);
 });
+
 
