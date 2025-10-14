@@ -1,8 +1,8 @@
-
+// DADOS INCORPORADOS DIRETAMENTE NO JS (Client-Side Database)
 const PARKS_DATA = [
     {
         "id": "biribiri",
-        "nome": "Biribiri",
+        "nome": "PE Biribiri",
         "municipios": ["Diamantina"],
         "regiao": "Alto Jequitinhonha",
         "coordenadas_base": { "latitude": -18.2500, "longitude": -43.6000 },
@@ -19,7 +19,7 @@ const PARKS_DATA = [
     },
     {
         "id": "ibitipoca",
-        "nome": "Ibitipoca",
+        "nome": "PE Ibitipoca",
         "municipios": ["Lima Duarte", "Santa Rita de Ibitipoca"],
         "regiao": "Zona da Mata",
         "coordenadas_base": { "latitude": -21.7142, "longitude": -43.8967 },
@@ -37,148 +37,70 @@ const PARKS_DATA = [
     // NOTA: Os outros 17 parques devem ser adicionados aqui no futuro.
 ];
 
+// Variável para a instância do leitor de QR Code
+let html5QrCode = null; 
+
 // ====================================================================
-// O RESTANTE DO CÓDIGO (PARTE 1, 3, 4, 5) SEGUE ABAIXO...
-// ... (Toda a sua lógica de Navegação, QR Code e Armazenamento Local)
+// FUNÇÕES DE RENDERIZAÇÃO E UTILITY (DEFINIDAS NO ESCOPO GLOBAL)
 // ====================================================================
 
-document.addEventListener('DOMContentLoaded', () => {
-    const views = document.querySelectorAll('.view');
-    const navItems = document.querySelectorAll('.nav-item');
-    const btnBack = document.querySelector('.btn-back');
-    const fab = document.querySelector('.fab');
-    const qrReaderDiv = document.getElementById('reader');
-    const qrReaderCloseBtn = document.getElementById('reader-close-btn');
-    let html5QrCode = null;
-    renderParkList();
-    
-    // Funções de Navegação
-    function navigateTo(viewId) {
-        views.forEach(view => { view.classList.add('hidden'); });
-        document.getElementById(viewId).classList.remove('hidden');
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href').includes(viewId)) { item.classList.add('active'); }
-        });
-    }
-
-    navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
-    if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('home-view'); }); }
-    const featuredCard = document.querySelector('.featured-card .btn-secondary');
-    if (featuredCard) { featuredCard.addEventListener('click', () => { navigateTo('detail-view'); }); }
-
-// ... dentro de app.js (Funções de QR Code)
-
-    // ESTE É O BLOCO CORRIGIDO PARA SUBSTITUIR A FUNÇÃO startQrScanner:
-    function startQrScanner() {
-        const qrContainer = document.getElementById('qr-reader-container');
-
-        // 1. CHECAGEM DE SEGURANÇA: Se o container não for encontrado, alerta e para a execução.
-        if (!qrContainer) {
-            alert("Erro fatal: Contêiner do QR Code não encontrado no HTML.");
-            console.error("ID #qr-reader-container não encontrado.");
-            return; 
-        }
-
-        qrReaderDiv.style.display = 'flex'; // Torna a tela do scanner visível
-        document.getElementById('reader-status').innerText = "Aguardando leitura do QR Code...";
-
-        // 2. Cria a instância do leitor se ainda não existir
-        if (!html5QrCode) {
-            html5QrCode = new Html5Qrcode("qr-reader-container");
-        }
-
-        const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-        html5QrCode.start(
-            { facingMode: "environment" }, // Usa a câmera traseira
-            config,
-            onScanSuccess, // Função de sucesso
-            (errorMessage) => {
-                // Mensagens de erro de detecção não são mostradas
-            }
-        ).catch((err) => {
-            // Se houver erro de permissão da câmera (mais comum no celular)
-            document.getElementById('reader-status').innerText = `Erro: Câmera inacessível. Verifique as permissões de site ou use HTTPS.`;
-            console.error("Erro ao iniciar câmera (Verifique as permissões):", err);
-            stopQrScanner(); // Fecha a tela de erro
-        });
-    }
-
-// ...
-    function stopQrScanner() {
-        if (html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().then(() => { qrReaderDiv.style.display = 'none'; }).catch(err => { qrReaderDiv.style.display = 'none'; }); } else { qrReaderDiv.style.display = 'none'; }
-    }
-    function onScanSuccess(decodedText) {
-        stopQrScanner(); 
-        if (decodedText.startsWith("TRILHASMG_CHECKIN_")) {
-            const parkId = decodedText.split("_")[2].toLowerCase();
-            const park = PARKS_DATA.find(p => p.id === parkId);
-            if (park) {
-                processSuccessfulCheckin(park);
-            } else { alert("❌ QR Code válido, mas o ID do parque é desconhecido."); }
-        } else { alert("❌ QR Code Inválido. Escaneie apenas códigos oficiais do Trilhas de Minas."); }
-    }
-    if (fab) { fab.addEventListener('click', startQrScanner); }
-    if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
-    
-    // Processamento de Conquista
-    function processSuccessfulCheckin(park) {
-        const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
-        const xp = parseInt(localStorage.getItem('userXP') || '0');
-        if (visits.includes(park.id)) { alert(`🎉 Bem-vindo de volta ao ${park.nome}! Visita registrada anteriormente.`); return; }
-        
-        visits.push(park.id);
-        localStorage.setItem('userVisits', JSON.stringify(visits));
-        
-        const xpGained = 150; 
-        const newXP = xp + xpGained;
-        localStorage.setItem('userXP', newXP.toString());
-        
-        const badgeName = park.badges_exclusivos[0] || "Selo de Visitação";
-        
-        alert(`
-        ✅ CHECK-IN VALIDADO: ${park.nome}
-        
-        🏆 CONQUISTA: ${badgeName} desbloqueado!
-        🌟 XP GANHO: +${xpGained}
-        
-        Total de Parques Visitados: ${visits.length}
-        Total de XP: ${newXP}
-        `);
-        updateProfileDisplay(newXP);
-    }
-    
-    function updateProfileDisplay(currentXP) {
-        const xpScoreElement = document.querySelector('.xp-score');
-        if (xpScoreElement) { xpScoreElement.innerText = `${currentXP} XP`; }
-    }
-
-    // Inicialização
-    navigateTo('home-view');
-    const initialXP = parseInt(localStorage.getItem('userXP') || '0');
-    updateProfileDisplay(initialXP);
-    console.log(`✅ Projeto iniciado. Dados dos Parques carregados (incorporados). Total: ${PARKS_DATA.length}`);
-});
+function updateProfileDisplay(currentXP) {
+    const xpScoreElement = document.querySelector('.xp-score');
+    if (xpScoreElement) { xpScoreElement.innerText = `${currentXP} XP`; }
 }
-// ====================================================================
-// PARTE 6: RENDERIZAÇÃO DA LISTA DE PARQUES (Adicionar ao app.js)
-// ====================================================================
 
-/**
- * Função para criar o HTML de um Card de Parque
- * @param {object} park - O objeto de dados do parque
- * @returns {string} HTML do card.
- */
+function processSuccessfulCheckin(park) {
+    const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
+    const xp = parseInt(localStorage.getItem('userXP') || '0');
+    
+    if (visits.includes(park.id)) { 
+        alert(`🎉 Bem-vindo de volta ao ${park.nome}! Visita registrada anteriormente.`); 
+        return; 
+    }
+    
+    visits.push(park.id);
+    localStorage.setItem('userVisits', JSON.stringify(visits));
+    
+    const xpGained = 150; 
+    const newXP = xp + xpGained;
+    localStorage.setItem('userXP', newXP.toString());
+    
+    const badgeName = park.badges_exclusivos[0] || "Selo de Visitação";
+    
+    alert(`
+    ✅ CHECK-IN VALIDADO: ${park.nome}
+    
+    🏆 CONQUISTA: ${badgeName} desbloqueado!
+    🌟 XP GANHO: +${xpGained}
+    
+    Total de Parques Visitados: ${visits.length}
+    Total de XP: ${newXP}
+    `);
+    
+    updateProfileDisplay(newXP);
+    renderParkList(); // Atualiza a lista após o check-in!
+}
+
+function onScanSuccess(decodedText) {
+    stopQrScanner(); 
+    if (decodedText.startsWith("TRILHASMG_CHECKIN_")) {
+        const parkId = decodedText.split("_")[2].toLowerCase();
+        const park = PARKS_DATA.find(p => p.id === parkId);
+        if (park) {
+            processSuccessfulCheckin(park);
+        } else { alert("❌ QR Code válido, mas o ID do parque é desconhecido."); }
+    } else { alert("❌ QR Code Inválido. Escaneie apenas códigos oficiais do Trilhas de Minas."); }
+}
+
+// Funções de Renderização (Que não estavam no escopo correto antes)
 function createParkCardHTML(park) {
     const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
     const isVisited = visits.includes(park.id);
     const visitStatus = isVisited ? 'Visitado' : 'A visitar';
     const statusClass = isVisited ? 'visited' : 'to-visit';
     
-    // O design do card é baseado no card já existente na home
     return `
-        <div class="card park-list-card ${statusClass}" data-park-id="${park.id}">
+        <div class="card park-list-card ${statusClass}" data-park-id="${park.id}" style="margin: 15px;">
             <div class="card-header">
                 <h3>${park.nome}</h3>
                 <span class="park-status status-${statusClass}">${visitStatus}</span>
@@ -191,37 +113,112 @@ function createParkCardHTML(park) {
     `;
 }
 
-/**
- * Função que pega os dados e insere os cards na view de lista.
- */
 function renderParkList() {
     const listView = document.getElementById('list-view');
-    
-    // Encontra o contêiner de conteúdo dentro da list-view
-    const parkContentContainer = listView.querySelector('.park-content'); 
-
-    if (!parkContentContainer) {
-        // Se a list-view não tiver a classe .park-content (como fizemos nos placeholders), 
-        // criamos a lista diretamente.
-        console.error("Contêiner .park-content não encontrado. Renderizando diretamente.");
-        listView.innerHTML = `<h1 class="park-title">Todos os Parques</h1><div id="park-cards-container"></div>`;
-        const container = document.getElementById('park-cards-container');
-
-        // Loop para gerar todos os cards
-        PARKS_DATA.forEach(park => {
-            container.innerHTML += createParkCardHTML(park);
-        });
-        
-    } else {
-        // Se já tiver o contêiner .park-content, inserimos a lista após o título
-        let listHTML = '';
-        PARKS_DATA.forEach(park => {
-            listHTML += createParkCardHTML(park);
-        });
-        parkContentContainer.innerHTML += listHTML; 
+    if (!listView) {
+        console.error("ERRO: Elemento #list-view não encontrado no DOM.");
+        return;
     }
+
+    let listHTML = '<h1 class="park-title" style="padding: 15px 15px 0;">Todos os Parques</h1>';
     
+    PARKS_DATA.forEach(park => {
+        listHTML += createParkCardHTML(park);
+    });
+
+    listView.innerHTML = listHTML;
     console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista.`);
 }
 
+// ====================================================================
+// LÓGICA DE INICIALIZAÇÃO E EVENT HANDLERS (DENTRO DO DOMContentLoaded)
+// ====================================================================
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Referências do DOM
+    const views = document.querySelectorAll('.view');
+    const navItems = document.querySelectorAll('.nav-item');
+    const btnBack = document.querySelector('.btn-back');
+    const fab = document.querySelector('.fab');
+    const qrReaderDiv = document.getElementById('reader');
+    const qrReaderCloseBtn = document.getElementById('reader-close-btn');
+
+    // Funções de Controle
+    function navigateTo(viewId) {
+        views.forEach(view => { view.classList.add('hidden'); });
+        document.getElementById(viewId).classList.remove('hidden');
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href').includes(viewId)) { item.classList.add('active'); }
+        });
+    }
+
+    // Lógica do QR Code
+    function stopQrScanner() {
+        if (html5QrCode && html5QrCode.isScanning) { 
+            html5QrCode.stop().then(() => { 
+                qrReaderDiv.style.display = 'none'; 
+            }).catch(err => { 
+                qrReaderDiv.style.display = 'none'; 
+            }); 
+        } else { 
+            qrReaderDiv.style.display = 'none'; 
+        }
+    }
+
+    function startQrScanner() {
+        const qrContainer = document.getElementById('qr-reader-container');
+
+        if (!qrContainer) {
+            alert("Erro fatal: Contêiner do QR Code não encontrado no HTML.");
+            console.error("ID #qr-reader-container não encontrado.");
+            return; 
+        }
+
+        qrReaderDiv.style.display = 'flex';
+        document.getElementById('reader-status').innerText = "Aguardando leitura do QR Code...";
+
+        // Esta é a correção do problema de inicialização de câmera:
+        setTimeout(() => {
+            if (!html5QrCode) {
+                // Instância criada aqui
+                html5QrCode = new Html5Qrcode("qr-reader-container");
+            }
+    
+            const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    
+            html5QrCode.start(
+                { facingMode: "environment" },
+                config,
+                onScanSuccess,
+                (errorMessage) => {}
+            ).catch((err) => {
+                document.getElementById('reader-status').innerText = `Erro: Câmera inacessível. Verifique as permissões.`;
+                console.error("Erro ao iniciar câmera (Verifique as permissões):", err);
+                stopQrScanner();
+            });
+        }, 100);
+    }
+    
+    // Event Listeners
+    navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
+    if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('home-view'); }); }
+    const featuredCard = document.querySelector('.featured-card .btn-secondary');
+    if (featuredCard) { featuredCard.addEventListener('click', () => { navigateTo('detail-view'); }); }
+    if (fab) { fab.addEventListener('click', startQrScanner); }
+    if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
+
+    // ====================================================================
+    // BLOCO FINAL DE INICIALIZAÇÃO E RENDERIZAÇÃO
+    // ====================================================================
+    
+    // 1. Navega para a Home View e Inicia o Perfil
+    navigateTo('home-view');
+    const initialXP = parseInt(localStorage.getItem('userXP') || '0');
+    updateProfileDisplay(initialXP);
+    
+    // 2. Renderiza a lista de parques na View (Solução para o problema)
+    renderParkList();
+
+    console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
+});
