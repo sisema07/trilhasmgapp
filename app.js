@@ -1,8 +1,6 @@
 // DADOS INCORPORADOS DIRETAMENTE NO JS (Client-Side Database)
 const PARKS_DATA = [
-    {
-[
-    {
+       {
         "id": "biribiri",
         "nome": "PE Biribiri",
         "municipios": ["Diamantina"],
@@ -499,3 +497,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
 });
+
