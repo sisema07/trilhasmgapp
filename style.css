@@ -259,4 +259,63 @@ html, body {
 .infra-list i {
     color: var(--color-primary);
     margin-right: 10px;
+
+}
+
+/* ESTILOS PARA OS CARDS NA TELA DE LISTA */
+
+.park-list-card {
+    border-left: 8px solid var(--color-gray);
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    transition: all 0.3s;
+}
+
+.park-list-card.to-visit {
+    border-left-color: var(--color-secondary); /* Amarelo para parques a visitar */
+}
+
+.park-list-card.visited {
+    border-left-color: var(--color-primary); /* Verde para parques visitados */
+    opacity: 0.8;
+}
+
+.park-list-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.park-list-card h3 {
+    font-size: 1.2em;
+    margin: 0;
+    color: var(--color-text-dark);
+}
+
+.park-list-card p {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.park-status {
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    color: var(--color-text-light);
+}
+
+.status-to-visit {
+    background-color: var(--color-secondary);
+}
+
+.status-visited {
+    background-color: var(--color-primary);
+}
+
+.btn-small {
+    padding: 6px 10px;
+    font-size: 0.8em;
 }
