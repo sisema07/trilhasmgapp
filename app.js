@@ -487,7 +487,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBack = document.querySelector('.btn-back');
 
     navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
-    if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('home-view'); }); }
+    if (btnBack) { 
+        btnBack.addEventListener('click', () => { 
+            // CORREÇÃO UX: Volta para a lista de parques (#list-view)
+            navigateTo('list-view'); 
+        }); 
+    }
     if (fab) { fab.addEventListener('click', startQrScanner); }
     if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
 
@@ -508,3 +513,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
 });
+
