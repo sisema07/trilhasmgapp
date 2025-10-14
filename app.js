@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadParkData() {
         try {
-            const response = await fetch('/trilhasmgapp/pe_minas_data.json'); 
+            const response = await fetch('https://sisema07.github.io/trilhasmgapp/pe_minas_data.json'); 
             if (!response.ok) {
                  throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -224,3 +224,4 @@ document.addEventListener('DOMContentLoaded', () => {
     loadParkData();
 
 });
+
