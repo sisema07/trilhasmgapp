@@ -1,0 +1,262 @@
+/* Definição de Cores e Reset Básico (Mobile-First) */
+:root {
+    --color-primary: #46B08B;    /* Novo Verde-Água (Ação Principal) */
+    --color-secondary: #FFD24F;  /* Amarelo Ouro Vivo (Destaque/XP) */
+    --color-background: #F8F8F8; /* Quase Branco (Fundo) */
+    --color-text-dark: #212121;  /* Grafite Escuro (Texto Principal) */
+    --color-text-light: #FFFFFF; /* Branco (Texto em Fundo Escuro) */
+    --color-gray: #E0E0E0;       /* Cinza Claro para elementos inativos/bordas */
+}
+
+/* Reset Básico (Mobile-First Base) */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+html, body {
+    height: 100%;
+    background-color: var(--color-background);
+}
+
+/* LAYOUT GERAL */
+
+.view {
+    padding-bottom: 70px; /* Espaço para a barra de navegação inferior */
+}
+
+.hidden {
+    display: none !important;
+}
+
+.main-content {
+    /* Ocupa todo o espaço entre Header e Nav-Bar */
+    padding-top: 56px; /* Espaço para o header */
+    height: calc(100vh - 56px - 60px); /* Altura da tela menos header e nav-bar */
+    overflow-y: auto; /* Permite rolar o conteúdo principal */
+}
+
+/* 1. Header (Topo) */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background-color: var(--color-text-light);
+    color: var(--color-text-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.app-header .logo {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.app-header .profile {
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    color: var(--color-secondary);
+}
+
+.app-header .profile i {
+    margin-left: 8px;
+    font-size: 1.4em;
+}
+
+/* 2. Nav-Bar (Inferior) */
+.nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: var(--color-text-light);
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-bar .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-dark);
+    text-decoration: none;
+    font-size: 0.7em;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.nav-bar .nav-item.active {
+    opacity: 1;
+    color: var(--color-primary);
+}
+
+.nav-bar .nav-item i {
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+
+/* COMPONENTES GERAIS */
+
+/* Botões */
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-light);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-text-dark);
+}
+
+.btn-full-width {
+    width: 100%;
+}
+
+.btn-share {
+    background-color: #E1306C; /* Cor do Instagram para apelo visual */
+    color: var(--color-text-light);
+    margin-top: 20px;
+    width: 100%;
+}
+
+/* Cards */
+.card {
+    background-color: var(--color-text-light);
+    margin: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* HOME VIEW ESPECÍFICA */
+
+.map-area {
+    width: 100%;
+    height: 350px; /* Altura generosa para o mapa */
+    background-color: var(--color-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-dark);
+}
+
+.map-placeholder {
+    text-align: center;
+    opacity: 0.7;
+}
+
+.fab {
+    position: fixed;
+    bottom: 75px; /* Acima da nav-bar */
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-size: 1.5em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
+/* DETALHE DO PARQUE VIEW ESPECÍFICA */
+
+.hero-image {
+    height: 250px;
+    background-image: url('placeholder_ibitipoca.jpg'); /* Substitua pela imagem do parque */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.btn-back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--color-text-light);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.park-content {
+    padding: 15px;
+}
+
+.park-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: var(--color-text-dark);
+}
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-gray);
+}
+
+.tab {
+    flex-grow: 1;
+    padding: 10px 0;
+    border: none;
+    background: none;
+    font-weight: bold;
+    color: var(--color-text-dark);
+    opacity: 0.6;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab.active {
+    opacity: 1;
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.tab-content {
+    padding: 10px 0;
+}
+
+.infra-list {
+    list-style: none;
+    margin-top: 10px;
+}
+
+.infra-list li {
+    padding: 5px 0;
+    color: var(--color-text-dark);
+    font-size: 1.1em;
+}
+
+.infra-list i {
+    color: var(--color-primary);
+    margin-right: 10px;
+}
