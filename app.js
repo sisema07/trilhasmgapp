@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadParkData() {
         try {
-            const response = await fetch('./pe_minas_data.json'); 
+            const response = await fetch('/trilhasmgapp/pe_minas_data.json'); 
             if (!response.ok) {
                  throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -222,4 +222,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Carrega os dados dos parques
     loadParkData();
+
 });
