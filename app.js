@@ -1,6 +1,6 @@
 // DADOS INCORPORADOS DIRETAMENTE NO JS (Client-Side Database)
 const PARKS_DATA = [
-       {
+    {
         "id": "biribiri",
         "nome": "PE Biribiri",
         "municipios": ["Diamantina"],
@@ -34,9 +34,6 @@ const PARKS_DATA = [
         ],
         "badges_exclusivos": ["Selo_Ibitipoca_Visita", "Badge_Mestre_das_Grutas"]
     },
-
-    /* --- 17 parques adicionais (modelo padronizado). Alguns campos de coordenadas/links/POIs podem precisar de validação final --- */
-
     {
         "id": "itacolomi",
         "nome": "PE Itacolomi",
@@ -54,52 +51,94 @@ const PARKS_DATA = [
         "badges_exclusivos": ["Selo_Itacolomi_Visita"]
     },
     {
-        "id": "sumidouro",
-        "nome": "PE Sumidouro",
-        "municipios": ["Lagoa Santa","Pedro Leopoldo"],
-        "regiao": "Região Metropolitana / Norte de BH",
-        "coordenadas_base": { "latitude": -19.5990, "longitude": -43.8660 },
+        "id": "lapa_grande",
+        "nome": "PE Lapa Grande",
+        "municipios": ["Lagoa Santa","region_to_confirm"],
+        "regiao": "Norte / Centro-Norte",
+        "coordenadas_base": { "latitude": -18.9000, "longitude": -44.0000 },
+        "geofence_raio_m": 700,
+        "resumo": "Parque com grutas e numerosas pinturas rupestres, importante para arqueologia e visitas guiadas.",
+        "infraestrutura": ["Grutas", "Trilhas", "Programas educativos"],
+        "status_operacao": "Aberto (visitação com regras específicas)",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [
+            { "poi_id": "pinturas_rupestres", "nome": "Painéis rupestres", "tipo": "Cultural", "latitude": -18.9000, "longitude": -44.0000, "quiz_id": null, "desc_curta": "Conjunto de pinturas rupestres visitáveis." }
+        ],
+        "badges_exclusivos": ["Selo_LapaGrande_Historia"]
+    },
+    {
+        "id": "mata_do_limoeiro",
+        "nome": "PE Mata do Limoeiro",
+        "municipios": ["region_to_confirm"],
+        "regiao": "Região a confirmar",
+        "coordenadas_base": { "latitude": null, "longitude": null },
+        "geofence_raio_m": 400,
+        "resumo": "Pequena unidade de conservação com remanescentes de mata; informações de visitação e POIs a validar.",
+        "infraestrutura": ["Trilhas (básico)"],
+        "status_operacao": "A confirmar",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [],
+        "badges_exclusivos": []
+    },
+    {
+        "id": "nova_baden",
+        "nome": "PE Nova Baden",
+        "municipios": ["Muriaé","region_to_confirm"],
+        "regiao": "Zona da Mata",
+        "coordenadas_base": { "latitude": -21.1000, "longitude": -42.3600 },
         "geofence_raio_m": 600,
-        "resumo": "Parque com cavidades e grutas (Gruta da Lapinha), trilhas e sítios arqueológicos/paleontológicos.",
-        "infraestrutura": ["Grutas visitáveis", "Trilhas", "Centro de Visitantes", "Programação educativa"],
-        "status_operacao": "Aberto (visitação controlada)",
-        "link_agendamento": "https://ief.mg.gov.br (página da unidade) - confirmar link específico",
+        "resumo": "Unidade com importantes remanescentes de mata e atrativos naturais; aberta para visitação com estrutura básica.",
+        "infraestrutura": ["Trilhas", "Trilha interpretativa", "Centro de Visitantes (básico)"],
+        "status_operacao": "Aberto (consultar horários locais)",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [
-            { "poi_id": "gruta_lapinha", "nome": "Gruta da Lapinha", "tipo": "Natural", "latitude": -19.5910, "longitude": -43.8800, "quiz_id": null, "desc_curta": "Gruta extensa com visitas guiadas." }
+            { "poi_id": "ponto_novab", "nome": "Trilha principal", "tipo": "Natural", "latitude": -21.1000, "longitude": -42.3600, "quiz_id": null, "desc_curta": "Trilha e áreas de observação da flora." }
         ],
-        "badges_exclusivos": ["Selo_Sumidouro_Explorador"]
+        "badges_exclusivos": ["Selo_NovaBaden_Conservacao"]
     },
     {
-        "id": "serra_rola_moca",
-        "nome": "PE Serra do Rola-Moça",
-        "municipios": ["Brumadinho","Nova Lima","Ibirité"],
-        "regiao": "Metropolitana / Serra da Mantiqueira",
-        "coordenadas_base": { "latitude": -19.9040, "longitude": -43.8390 },
+        "id": "pau_furado",
+        "nome": "PE Pau Furado",
+        "municipios": ["region_to_confirm"],
+        "regiao": "Região a confirmar",
+        "coordenadas_base": { "latitude": null, "longitude": null },
+        "geofence_raio_m": 500,
+        "resumo": "Parque estadual com trilhas e características naturais — informações de acesso e pontos de visitação a confirmar junto ao IEF.",
+        "infraestrutura": ["Trilhas (confirmar)", "Portaria (confirmar)"],
+        "status_operacao": "A confirmar",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [],
+        "badges_exclusivos": []
+    },
+    {
+        "id": "pau_furado_2",
+        "nome": "PE Pau Furado (entrada alternativa)",
+        "municipios": ["region_to_confirm"],
+        "regiao": "Região a confirmar",
+        "coordenadas_base": { "latitude": null, "longitude": null },
+        "geofence_raio_m": 500,
+        "resumo": "Registro adicional de unidade que consta em listagens estaduais — verificar com IEF detalhes de visitação.",
+        "infraestrutura": [],
+        "status_operacao": "A confirmar",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [],
+        "badges_exclusivos": []
+    },
+    {
+        "id": "pico_itambe",
+        "nome": "PE Pico do Itambé",
+        "municipios": ["Itambé do Mato Dentro","region_to_confirm"],
+        "regiao": "Serra do Espinhaço",
+        "coordenadas_base": { "latitude": -19.0000, "longitude": -43.0000 },
         "geofence_raio_m": 800,
-        "resumo": "Unidade com formações de serra, nascentes e trilhas próximas à RMBH; atividade de educação ambiental.",
-        "infraestrutura": ["Trilhas", "Centro de Visitantes", "Mirantes", "Trilhas interpretativas"],
-        "status_operacao": "Aberto (com regras locais)",
+        "resumo": "Parque com pico de altitude (Itambé), trilhas de montanha e rica biodiversidade de altitude.",
+        "infraestrutura": ["Trilhas de montanha", "Abrigos", "Sinalização básica"],
+        "status_operacao": "Aberto (consultar restrições sazonais)",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [
-            { "poi_id": "mirante_rolla", "nome": "Mirante principal", "tipo": "Natural", "latitude": -19.9050, "longitude": -43.8400, "quiz_id": null, "desc_curta": "Ponto panorâmico sobre a RM." }
+            { "poi_id": "pico_itambe_mirante", "nome": "Mirante do Pico", "tipo": "Natural", "latitude": -19.0000, "longitude": -43.0000, "quiz_id": null, "desc_curta": "Mirante de altitude com panorama amplo." }
         ],
-        "badges_exclusivos": ["Selo_RolaMoca_View"]
-    },
-    {
-        "id": "serra_brigadeiro",
-        "nome": "PE Serra do Brigadeiro",
-        "municipios": ["Arantina","Frei Gaspar","Fervedouro","Santa Margarida","Virgolândia","Divino","Ervália","Rodeiro","Muriaé","Fernandes Tourinho","Argirita","Santo Antônio do Manhuaçu"],
-        "regiao": "Zona da Mata / Vale do Rio Doce (Região Alto Caparaó complexa)",
-        "coordenadas_base": { "latitude": -20.7830, "longitude": -42.1990 },
-        "geofence_raio_m": 1000,
-        "resumo": "Parque com picos, vales e mata atlântica de altitude — popular entre montanhistas e praticantes de ecoturismo.",
-        "infraestrutura": ["Trilhas", "Picos", "Abrigos de trilha", "Sede administrativa"],
-        "status_operacao": "Aberto (visitação com cuidados em trilhas)",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [
-            { "poi_id": "pico_br", "nome": "Pico local (mirante)", "tipo": "Natural", "latitude": -20.7800, "longitude": -42.2000, "quiz_id": null, "desc_curta": "Trilhas e mirantes de altitude." }
-        ],
-        "badges_exclusivos": ["Selo_SerraBrigadeiro_Alpinista"]
+        "badges_exclusivos": ["Selo_PicoItambe_Alto"]
     },
     {
         "id": "rio_doce",
@@ -134,66 +173,20 @@ const PARKS_DATA = [
         "badges_exclusivos": ["Selo_RioPreto_Aventura"]
     },
     {
-        "id": "nova_baden",
-        "nome": "PE Nova Baden",
-        "municipios": ["Muriaé","region_to_confirm"],
-        "regiao": "Zona da Mata",
-        "coordenadas_base": { "latitude": -21.1000, "longitude": -42.3600 },
-        "geofence_raio_m": 600,
-        "resumo": "Unidade com importantes remanescentes de mata e atrativos naturais; aberta para visitação com estrutura básica.",
-        "infraestrutura": ["Trilhas", "Trilha interpretativa", "Centro de Visitantes (básico)"],
-        "status_operacao": "Aberto (consultar horários locais)",
+        "id": "serra_brigadeiro",
+        "nome": "PE Serra do Brigadeiro",
+        "municipios": ["Arantina","Frei Gaspar","Fervedouro","Santa Margarida","Virgolândia","Divino","Ervália","Rodeiro","Muriaé","Fernandes Tourinho","Argirita","Santo Antônio do Manhuaçu"],
+        "regiao": "Zona da Mata / Vale do Rio Doce (Região Alto Caparaó complexa)",
+        "coordenadas_base": { "latitude": -20.7830, "longitude": -42.1990 },
+        "geofence_raio_m": 1000,
+        "resumo": "Parque com picos, vales e mata atlântica de altitude — popular entre montanhistas e praticantes de ecoturismo.",
+        "infraestrutura": ["Trilhas", "Picos", "Abrigos de trilha", "Sede administrativa"],
+        "status_operacao": "Aberto (visitação com cuidados em trilhas)",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [
-            { "poi_id": "ponto_novab", "nome": "Trilha principal", "tipo": "Natural", "latitude": -21.1000, "longitude": -42.3600, "quiz_id": null, "desc_curta": "Trilha e áreas de observação da flora." }
+            { "poi_id": "pico_br", "nome": "Pico local (mirante)", "tipo": "Natural", "latitude": -20.7800, "longitude": -42.2000, "quiz_id": null, "desc_curta": "Trilhas e mirantes de altitude." }
         ],
-        "badges_exclusivos": ["Selo_NovaBaden_Conservacao"]
-    },
-    {
-        "id": "lapa_grande",
-        "nome": "PE Lapa Grande",
-        "municipios": ["Lagoa Santa","region_to_confirm"],
-        "regiao": "Norte / Centro-Norte",
-        "coordenadas_base": { "latitude": -18.9000, "longitude": -44.0000 },
-        "geofence_raio_m": 700,
-        "resumo": "Parque com grutas e numerosas pinturas rupestres, importante para arqueologia e visitas guiadas.",
-        "infraestrutura": ["Grutas", "Trilhas", "Programas educativos"],
-        "status_operacao": "Aberto (visitação com regras específicas)",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [
-            { "poi_id": "pinturas_rupestres", "nome": "Painéis rupestres", "tipo": "Cultural", "latitude": -18.9000, "longitude": -44.0000, "quiz_id": null, "desc_curta": "Conjunto de pinturas rupestres visitáveis." }
-        ],
-        "badges_exclusivos": ["Selo_LapaGrande_Historia"]
-    },
-    {
-        "id": "pau_furado",
-        "nome": "PE Pau Furado",
-        "municipios": ["region_to_confirm"],
-        "regiao": "Região a confirmar",
-        "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 500,
-        "resumo": "Parque estadual com trilhas e características naturais — informações de acesso e pontos de visitação a confirmar junto ao IEF.",
-        "infraestrutura": ["Trilhas (confirmar)", "Portaria (confirmar)"],
-        "status_operacao": "A confirmar",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
-    },
-    {
-        "id": "pico_itambe",
-        "nome": "PE Pico do Itambé",
-        "municipios": ["Itambé do Mato Dentro","region_to_confirm"],
-        "regiao": "Serra do Espinhaço",
-        "coordenadas_base": { "latitude": -19.0000, "longitude": -43.0000 },
-        "geofence_raio_m": 800,
-        "resumo": "Parque com pico de altitude (Itambé), trilhas de montanha e rica biodiversidade de altitude.",
-        "infraestrutura": ["Trilhas de montanha", "Abrigos", "Sinalização básica"],
-        "status_operacao": "Aberto (consultar restrições sazonais)",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [
-            { "poi_id": "pico_itambe_mirante", "nome": "Mirante do Pico", "tipo": "Natural", "latitude": -19.0000, "longitude": -43.0000, "quiz_id": null, "desc_curta": "Mirante de altitude com panorama amplo." }
-        ],
-        "badges_exclusivos": ["Selo_PicoItambe_Alto"]
+        "badges_exclusivos": ["Selo_SerraBrigadeiro_Alpinista"]
     },
     {
         "id": "serra_das_araras",
@@ -210,100 +203,78 @@ const PARKS_DATA = [
         "badges_exclusivos": []
     },
     {
-        "id": "serra_papagaio",
-        "nome": "PE Serra do Papagaio",
+        "id": "serra_do_caraça_placeholder",
+        "nome": "PE / UC - Caraça (obs: UC de gestão distinta)",
+        "municipios": ["Catas Altas","Santa Bárbara?"],
+        "regiao": "Espinhaço Sul",
+        "coordenadas_base": { "latitude": -20.1000, "longitude": -43.4800 },
+        "geofence_raio_m": 900,
+        "resumo": "Unidade de conservação e santuário histórico-natural, administrado por instituição religiosa; incluído aqui para referência geográfica.",
+        "infraestrutura": ["Hospedagem", "Trilhas", "Centro histórico"],
+        "status_operacao": "Aberto (gestão privada/religiosa)",
+        "link_agendamento": "https://www.santuariodocaraca.com.br/",
+        "pontos_interesse": [
+            { "poi_id": "caraça_santuario", "nome": "Santuário do Caraça", "tipo": "Cultural", "latitude": -20.1000, "longitude": -43.4800, "quiz_id": null, "desc_curta": "Centro histórico e religioso em meio à serra." },
+            { "poi_id": "caraça_cascatinha", "nome": "Cascatinha do Caraça", "tipo": "Natural", "latitude": -20.1100, "longitude": -43.4700, "quiz_id": null, "desc_curta": "Cachoeira mais próxima da sede; trilha leve." }
+        ],
+        "badges_exclusivos": ["Selo_Caraça_Peregrino"]
+    },
+    {
+        "id": "serra_do_rola_moca",
+        "nome": "PE Serra do Rola-Moça",
+        "municipios": ["Belo Horizonte","Brumadinho","Ibirité","Nova Lima"],
+        "regiao": "Região Metropolitana de BH / Quadrilátero Ferrífero",
+        "coordenadas_base": { "latitude": -20.0610, "longitude": -44.0190 },
+        "geofence_raio_m": 1000,
+        "resumo": "Importante unidade de conservação que protege mananciais e áreas de campo rupestre; mirantes e trilhas de fácil acesso.",
+        "infraestrutura": ["Mirantes", "Trilhas", "Centro de Visitantes", "Sinalização", "Portarias"],
+        "status_operacao": "Aberto (visitação com restrições por área)",
+        "link_agendamento": "https://ief.mg.gov.br/ (consultar página do parque)",
+        "pontos_interesse": [
+            { "poi_id": "mirante_bh", "nome": "Mirante Belo Horizonte", "tipo": "Natural", "latitude": -20.0500, "longitude": -44.0100, "quiz_id": null, "desc_curta": "Vista panorâmica da região metropolitana." },
+            { "poi_id": "trilha_manancial", "nome": "Trilha dos Mananciais", "tipo": "Ecológica", "latitude": -20.0650, "longitude": -44.0150, "quiz_id": null, "desc_curta": "Trilha educativa sobre recursos hídricos." }
+        ],
+        "badges_exclusivos": ["Selo_RolaMoca_Guarda_Agua"]
+    },
+    {
+        "id": "sete_salões",
+        "nome": "PE Sete Salões",
         "municipios": ["region_to_confirm"],
-        "regiao": "Região Sul/Mantiqueira",
+        "regiao": "Vale do Rio Doce / Leste de Minas",
         "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 800,
-        "resumo": "Unidade com serras, nascentes e biodiversidade de montanha; checar pontos de visitação e infraestrutura local.",
-        "infraestrutura": ["Trilhas (confirmar)", "Mirantes"],
-        "status_operacao": "A confirmar",
+        "geofence_raio_m": 600,
+        "resumo": "Parque com formações rochosas e cavernas, incluindo a Gruta Sete Salões; potencial para visitação ecológica e cultural.",
+        "infraestrutura": ["Grutas", "Trilhas (a confirmar)"],
+        "status_operacao": "A confirmar (visitação restrita)",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [],
         "badges_exclusivos": []
     },
     {
-        "id": "mata_do_limoeiro",
-        "nome": "PE Mata do Limoeiro",
+        "id": "sumidouro",
+        "nome": "PE Sumidouro",
+        "municipios": ["Lagoa Santa","Pedro Leopoldo"],
+        "regiao": "Região Metropolitana / Carste de Lagoa Santa",
+        "coordenadas_base": { "latitude": -19.5850, "longitude": -43.9560 },
+        "geofence_raio_m": 800,
+        "resumo": "Parque com importância arqueológica e paleontológica, abrigando a Lapa do Sumidouro e trilhas educativas.",
+        "infraestrutura": ["Centro de Visitantes", "Trilhas", "Grutas", "Museu Arqueológico"],
+        "status_operacao": "Aberto (visitação com acompanhamento obrigatório)",
+        "link_agendamento": "https://ief.mg.gov.br/ (consultar página do parque)",
+        "pontos_interesse": [
+            { "poi_id": "lapa_sumidouro", "nome": "Lapa do Sumidouro", "tipo": "Arqueológico", "latitude": -19.5860, "longitude": -43.9570, "quiz_id": null, "desc_curta": "Gruta com fósseis e vestígios pré-históricos." }
+        ],
+        "badges_exclusivos": ["Selo_Sumidouro_Explorador"]
+    },
+    {
+        "id": "vale_pereiro",
+        "nome": "PE Vale do Pereiro",
         "municipios": ["region_to_confirm"],
         "regiao": "Região a confirmar",
         "coordenadas_base": { "latitude": null, "longitude": null },
         "geofence_raio_m": 400,
-        "resumo": "Pequena unidade de conservação com remanescentes de mata; informações de visitação e POIs a validar.",
+        "resumo": "Parque estadual de pequeno porte, com vegetação de transição e cursos d’água — informações complementares a confirmar.",
         "infraestrutura": ["Trilhas (básico)"],
-        "status_operacao": "A confirmar",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
-    },
-    {
-        "id": "serra_do_intendente",
-        "nome": "PE Serra do Intendente",
-        "municipios": ["region_to_confirm"],
-        "regiao": "Zona da Mata / Sul",
-        "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 700,
-        "resumo": "Unidade com relevância para conservação regional; checar dados oficiais do IEF para visitas.",
-        "infraestrutura": ["Trilhas (a confirmar)"],
-        "status_operacao": "A confirmar",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
-    },
-    {
-        "id": "serra_verde",
-        "nome": "PE Serra Verde",
-        "municipios": ["region_to_confirm"],
-        "regiao": "Região a confirmar",
-        "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 600,
-        "resumo": "Parque estadual listado em guias — informações detalhadas de infraestrutura pendentes de verificação.",
-        "infraestrutura": ["Trilhas (confirmar)"],
-        "status_operacao": "A confirmar",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
-    },
-    {
-        "id": "serra_do_caraça_placeholder",
-        "nome": "PE / UC - Caraça (obs: UC de gestão distinta)",
-        "municipios": ["Catas Altas","Santa Bárbara?"],
-        "regiao": "Serra do Caraça / Quadrilátero Ferrífero",
-        "coordenadas_base": { "latitude": -20.2780, "longitude": -43.4290 },
-        "geofence_raio_m": 800,
-        "resumo": "Observação: Santuário do Caraça tem regime de gestão/uso específico (privado/associação) — incluído aqui apenas se desejar registrar como UC visitável.",
-        "infraestrutura": ["Trilhas", "Pousada/Santuário (gestão privada)"],
-        "status_operacao": "Aberto (gestão privada/associação) - confirmar inclusão",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [
-            { "poi_id": "santuario_caraça", "nome": "Santuário do Caraça", "tipo": "Cultural/Natural", "latitude": -20.2780, "longitude": -43.4290, "quiz_id": null, "desc_curta": "Importante atração histórica e natural (atenção: regime de visitação diferente)." }
-        ],
-        "badges_exclusivos": ["Selo_Caraça_Historico"]
-    },
-    {
-        "id": "serra_do_cipo_placeholder",
-        "nome": "PE Serra do Cipó (obs: unidade federal/nacional em parte)",
-        "municipios": ["Conceição do Mato Dentro","Itabira?"],
-        "regiao": "Serra do Espinhaço",
-        "coordenadas_base": { "latitude": -19.2540, "longitude": -43.5200 },
-        "geofence_raio_m": 1200,
-        "resumo": "Observação: Serra do Cipó possui tanto unidades federais quanto áreas estaduais — verificar qual unidade estadual incluir.",
-        "infraestrutura": ["Trilhas", "Mirantes", "Centro de Visitantes"],
-        "status_operacao": "Aberto (verificar gestão - federal/estadual)",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
-    },
-    {
-        "id": "pau_furado_2",
-        "nome": "PE Pau Furado (entrada alternativa)",
-        "municipios": ["region_to_confirm"],
-        "regiao": "Região a confirmar",
-        "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 500,
-        "resumo": "Registro adicional de unidade que consta em listagens estaduais — verificar com IEF detalhes de visitação.",
-        "infraestrutura": [],
         "status_operacao": "A confirmar",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [],
@@ -315,9 +286,24 @@ const PARKS_DATA = [
 // Variável para a instância do leitor de QR Code
 let html5QrCode = null; 
 
+
 // ====================================================================
-// FUNÇÕES DE RENDERIZAÇÃO E UTILITY (DEFINIDAS NO ESCOPO GLOBAL)
+// FUNÇÃO DE NAVEGAÇÃO MOVIDA PARA O ESCOPO GLOBAL (CORREÇÃO DE ERRO)
 // ====================================================================
+function navigateTo(viewId) {
+    const views = document.querySelectorAll('.view');
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    views.forEach(view => { view.classList.add('hidden'); });
+    
+    const targetView = document.getElementById(viewId);
+    if (targetView) { targetView.classList.remove('hidden'); } 
+    
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('href') === `#${viewId}`) { item.classList.add('active'); }
+    });
+}
 
 function updateProfileDisplay(currentXP) {
     const xpScoreElement = document.querySelector('.xp-score');
@@ -328,10 +314,7 @@ function processSuccessfulCheckin(park) {
     const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
     const xp = parseInt(localStorage.getItem('userXP') || '0');
     
-    if (visits.includes(park.id)) { 
-        alert(`🎉 Bem-vindo de volta ao ${park.nome}! Visita registrada anteriormente.`); 
-        return; 
-    }
+    if (visits.includes(park.id)) { alert(`🎉 Bem-vindo de volta ao ${park.nome}! Visita registrada anteriormente.`); return; }
     
     visits.push(park.id);
     localStorage.setItem('userVisits', JSON.stringify(visits));
@@ -353,7 +336,7 @@ function processSuccessfulCheckin(park) {
     `);
     
     updateProfileDisplay(newXP);
-    renderParkList(); // Atualiza a lista após o check-in!
+    renderParkList(); 
 }
 
 function onScanSuccess(decodedText) {
@@ -367,7 +350,11 @@ function onScanSuccess(decodedText) {
     } else { alert("❌ QR Code Inválido. Escaneie apenas códigos oficiais do Trilhas de Minas."); }
 }
 
-// Funções de Renderização (Que não estavam no escopo correto antes)
+
+// ====================================================================
+// FUNÇÕES DE RENDERIZAÇÃO E EVENTOS DE DETALHE (ESCOPO GLOBAL)
+// ====================================================================
+
 function createParkCardHTML(park) {
     const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
     const isVisited = visits.includes(park.id);
@@ -388,14 +375,36 @@ function createParkCardHTML(park) {
     `;
 }
 
-// ====================================================================
-// PARTE 7: RENDERIZAÇÃO DA TELA DE DETALHES
-// ====================================================================
-
 /**
- * Função que preenche a tela de detalhes com os dados do parque.
- * @param {object} park - O objeto de dados do parque.
+ * Função que ativa os event listeners para o botão 'Ver Detalhes'.
+ * ESTA FUNÇÃO PRECISA ESTAR NO ESCOPO GLOBAL PARA SER CHAMADA POR renderParkList()
  */
+function setupCardListeners() {
+    const detailButtons = document.querySelectorAll('.view-details');
+    
+    detailButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const parkId = e.currentTarget.getAttribute('data-park-id');
+            const selectedPark = PARKS_DATA.find(p => p.id === parkId);
+            
+            if (selectedPark) {
+                renderParkDetail(selectedPark);
+            }
+        });
+    });
+
+    // Adiciona listener para o card de destaque na Home (também usa a função global)
+    const featuredCardButton = document.querySelector('.featured-card .btn-secondary');
+    if (featuredCardButton) {
+        featuredCardButton.addEventListener('click', () => {
+            const ibitipocaPark = PARKS_DATA.find(p => p.id === 'ibitipoca');
+            if (ibitipocaPark) {
+                renderParkDetail(ibitipocaPark);
+            }
+        });
+    }
+}
+
 function renderParkDetail(park) {
     const detailView = document.getElementById('detail-view');
     
@@ -418,35 +427,13 @@ function renderParkDetail(park) {
             <p style="margin-top: 10px;">Status: <strong>${park.status_operacao || 'Não informado'}</strong></p>
         `;
     }
-
-    // Navega para a tela de detalhes APÓS preencher os dados
-    navigateTo('detail-view');
-}
-
-/**
- * Função que ativa os event listeners para o botão 'Ver Detalhes'.
- */
-function setupCardListeners() {
-    const detailButtons = document.querySelectorAll('.view-details');
     
-    detailButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const parkId = e.currentTarget.getAttribute('data-park-id');
-            const selectedPark = PARKS_DATA.find(p => p.id === parkId);
-            
-            if (selectedPark) {
-                renderParkDetail(selectedPark);
-            }
-        });
-    });
+    navigateTo('detail-view');
 }
 
 function renderParkList() {
     const listView = document.getElementById('list-view');
-    if (!listView) {
-        console.error("ERRO: Elemento #list-view não encontrado no DOM.");
-        return;
-    }
+    if (!listView) { console.error("ERRO: Elemento #list-view não encontrado no DOM."); return; }
 
     let listHTML = '<h1 class="park-title" style="padding: 15px 15px 0;">Todos os Parques</h1>';
     
@@ -455,73 +442,39 @@ function renderParkList() {
     });
 
     listView.innerHTML = listHTML;
-    setupCardListeners(); // Ativa os cliques em 'Ver Detalhes'
-console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista. Listeners Ativados.`);
+    setupCardListeners(); // Chama a função global que ativa o clique nos cards
+    console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista. Listeners Ativados.`);
 }
+
 
 // ====================================================================
 // LÓGICA DE INICIALIZAÇÃO E EVENT HANDLERS (DENTRO DO DOMContentLoaded)
 // ====================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Referências do DOM
-    const views = document.querySelectorAll('.view');
-    const navItems = document.querySelectorAll('.nav-item');
-    const btnBack = document.querySelector('.btn-back');
+    // Referências do DOM (Variáveis que só existem aqui dentro)
     const fab = document.querySelector('.fab');
     const qrReaderDiv = document.getElementById('reader');
-    const qrReaderCloseBtn = document.getElementById('reader-close-btn');
+    const qrReaderCloseBtn = document.querySelector('#reader-close-btn');
 
-    // Funções de Controle
-    function navigateTo(viewId) {
-        views.forEach(view => { view.classList.add('hidden'); });
-        document.getElementById(viewId).classList.remove('hidden');
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href').includes(viewId)) { item.classList.add('active'); }
-        });
-    }
-
-    // Lógica do QR Code
+    // Funções do QR Code (Dependem das referências DOM)
     function stopQrScanner() {
         if (html5QrCode && html5QrCode.isScanning) { 
-            html5QrCode.stop().then(() => { 
-                qrReaderDiv.style.display = 'none'; 
-            }).catch(err => { 
-                qrReaderDiv.style.display = 'none'; 
-            }); 
-        } else { 
-            qrReaderDiv.style.display = 'none'; 
-        }
+            html5QrCode.stop().then(() => { qrReaderDiv.style.display = 'none'; }).catch(err => { qrReaderDiv.style.display = 'none'; }); 
+        } else { qrReaderDiv.style.display = 'none'; }
     }
 
     function startQrScanner() {
         const qrContainer = document.getElementById('qr-reader-container');
-
-        if (!qrContainer) {
-            alert("Erro fatal: Contêiner do QR Code não encontrado no HTML.");
-            console.error("ID #qr-reader-container não encontrado.");
-            return; 
-        }
+        if (!qrContainer) { alert("Erro fatal: Contêiner do QR Code não encontrado no HTML."); console.error("ID #qr-reader-container não encontrado."); return; }
 
         qrReaderDiv.style.display = 'flex';
         document.getElementById('reader-status').innerText = "Aguardando leitura do QR Code...";
 
-        // Esta é a correção do problema de inicialização de câmera:
         setTimeout(() => {
-            if (!html5QrCode) {
-                // Instância criada aqui
-                html5QrCode = new Html5Qrcode("qr-reader-container");
-            }
-    
+            if (!html5QrCode) { html5QrCode = new Html5Qrcode("qr-reader-container"); }
             const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-    
-            html5QrCode.start(
-                { facingMode: "environment" },
-                config,
-                onScanSuccess,
-                (errorMessage) => {}
-            ).catch((err) => {
+            html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, (errorMessage) => {}).catch((err) => {
                 document.getElementById('reader-status').innerText = `Erro: Câmera inacessível. Verifique as permissões.`;
                 console.error("Erro ao iniciar câmera (Verifique as permissões):", err);
                 stopQrScanner();
@@ -529,28 +482,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
     
-    // Event Listeners
+    // Event Listeners de Navegação (Usam a função global navigateTo)
+    const navItems = document.querySelectorAll('.nav-item');
+    const btnBack = document.querySelector('.btn-back');
+
     navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
     if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('home-view'); }); }
-    const featuredCard = document.querySelector('.featured-card .btn-secondary');
-    if (featuredCard) { featuredCard.addEventListener('click', () => { navigateTo('detail-view'); }); }
     if (fab) { fab.addEventListener('click', startQrScanner); }
     if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
+
 
     // ====================================================================
     // BLOCO FINAL DE INICIALIZAÇÃO E RENDERIZAÇÃO
     // ====================================================================
     
-    // 1. Navega para a Home View e Inicia o Perfil
+    // 1. Renderiza a lista de parques na View (e ativa os listeners)
+    renderParkList(); 
+
+    // 2. Navega para a Home View
     navigateTo('home-view');
+    
+    // 3. Inicia o Perfil
     const initialXP = parseInt(localStorage.getItem('userXP') || '0');
     updateProfileDisplay(initialXP);
     
-    // 2. Renderiza a lista de parques na View (Solução para o problema)
-    renderParkList();
-    setupCardListeners();   
-
     console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
 });
-
-
