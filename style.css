@@ -178,7 +178,7 @@ html, body {
 .map-responsive {
     position: relative;
     width: calc(100% - 30px); /* CORREÇÃO: REDUZ A LARGURA PARA DEIXAR MARGEM DE 15PX EM CADA LADO */
-    height: 400px !important;
+    height: 300px !important;
     margin: 5px 15px 0px 15px !important; /* Margem inferior zerada (0px) */
     
     /* ESTÉTICA DO CARD (Para as bordas externas) */
@@ -373,3 +373,4 @@ html, body {
     padding: 6px 10px;
     font-size: 0.8em;
 }
+
