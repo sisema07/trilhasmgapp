@@ -67,6 +67,22 @@ const PARKS_DATA = [
         "badges_exclusivos": ["Selo_LapaGrande_Historia"]
     },
     {
+        "id": "mata_do_krambeck",
+        "nome": "PE Mata do Krambeck",
+        "municipios": ["Juiz de Fora"],
+        "regiao": "Zona da Mata / Metropolitana de Juiz de Fora",
+        "coordenadas_base": { "latitude": -21.7700, "longitude": -43.3500 },
+        "geofence_raio_m": 500,
+        "resumo": "Parque Estadual criado para preservar remanescentes de Mata Atlântica em ambiente urbano, incorporando o Jardim Botânico e a Mata da Remonta. Área de cerca de 291,98 ha. :contentReference[oaicite:0]{index=0}",
+        "infraestrutura": ["Trilhas (a definir)", "Educação ambiental", "Conexão com jardins/botânica"],
+        "status_operacao": "Em processo de implantação / criação oficial (visitação ainda em fase de regulamentação)",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [
+            { "poi_id": "jardim_botanico_ufjf", "nome": "Jardim Botânico da UFJF", "tipo": "Cultural/Natural", "latitude": -21.7700, "longitude": -43.3500, "quiz_id": null, "desc_curta": "Parte incorporada ao parque, importante para educação ambiental." }
+        ],
+        "badges_exclusivos": ["Selo_Krambeck_Reserva"]
+    },
+    {
         "id": "mata_do_limoeiro",
         "nome": "PE Mata do Limoeiro",
         "municipios": ["region_to_confirm"],
@@ -103,22 +119,8 @@ const PARKS_DATA = [
         "regiao": "Região a confirmar",
         "coordenadas_base": { "latitude": null, "longitude": null },
         "geofence_raio_m": 500,
-        "resumo": "Parque estadual com trilhas e características naturais — informações de acesso e pontos de visitação a confirmar junto ao IEF.",
-        "infraestrutura": ["Trilhas (confirmar)", "Portaria (confirmar)"],
-        "status_operacao": "A confirmar",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
-    },
-    {
-        "id": "pau_furado_2",
-        "nome": "PE Pau Furado (entrada alternativa)",
-        "municipios": ["region_to_confirm"],
-        "regiao": "Região a confirmar",
-        "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 500,
-        "resumo": "Registro adicional de unidade que consta em listagens estaduais — verificar com IEF detalhes de visitação.",
-        "infraestrutura": [],
+        "resumo": "Parque estadual com trilhas e características naturais — dados de acesso, infraestrutura e pontos de visitação devem ser confirmados junto ao IEF.",
+        "infraestrutura": ["Trilhas (a confirmar)", "Portaria (a confirmar)"],
         "status_operacao": "A confirmar",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [],
@@ -173,6 +175,20 @@ const PARKS_DATA = [
         "badges_exclusivos": ["Selo_RioPreto_Aventura"]
     },
     {
+        "id": "serra_das_araras",
+        "nome": "PE Serra das Araras",
+        "municipios": ["region_to_confirm"],
+        "regiao": "Norte/Noroeste de MG",
+        "coordenadas_base": { "latitude": null, "longitude": null },
+        "geofence_raio_m": 500,
+        "resumo": "Parque estadual com áreas de cerrado e campos rupestres; detalhes de visitação a confirmar.",
+        "infraestrutura": ["Trilhas (a confirmar)"],
+        "status_operacao": "A confirmar",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [],
+        "badges_exclusivos": []
+    },
+    {
         "id": "serra_brigadeiro",
         "nome": "PE Serra do Brigadeiro",
         "municipios": ["Arantina","Frei Gaspar","Fervedouro","Santa Margarida","Virgolândia","Divino","Ervália","Rodeiro","Muriaé","Fernandes Tourinho","Argirita","Santo Antônio do Manhuaçu"],
@@ -189,13 +205,13 @@ const PARKS_DATA = [
         "badges_exclusivos": ["Selo_SerraBrigadeiro_Alpinista"]
     },
     {
-        "id": "serra_das_araras",
-        "nome": "PE Serra das Araras",
+        "id": "serra_do_intendente",
+        "nome": "PE Serra do Intendente",
         "municipios": ["region_to_confirm"],
-        "regiao": "Norte/Noroeste de MG",
+        "regiao": "Zona da Mata / Sul de MG",
         "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 500,
-        "resumo": "Parque estadual com áreas de cerrado e campos rupestres; detalhes de visitação a confirmar.",
+        "geofence_raio_m": 700,
+        "resumo": "Parque estadual com finalidade de conservar ecossistemas regionais; informações detalhadas de infraestrutura, visitas e pontos de interesse precisam ser validadas.",
         "infraestrutura": ["Trilhas (a confirmar)"],
         "status_operacao": "A confirmar",
         "link_agendamento": "url_de_agendamento_a_confirmar",
@@ -203,21 +219,21 @@ const PARKS_DATA = [
         "badges_exclusivos": []
     },
     {
-        "id": "serra_do_caraça_placeholder",
-        "nome": "PE / UC - Caraça (obs: UC de gestão distinta)",
-        "municipios": ["Catas Altas","Santa Bárbara?"],
-        "regiao": "Espinhaço Sul",
-        "coordenadas_base": { "latitude": -20.1000, "longitude": -43.4800 },
-        "geofence_raio_m": 900,
-        "resumo": "Unidade de conservação e santuário histórico-natural, administrado por instituição religiosa; incluído aqui para referência geográfica.",
-        "infraestrutura": ["Hospedagem", "Trilhas", "Centro histórico"],
-        "status_operacao": "Aberto (gestão privada/religiosa)",
-        "link_agendamento": "https://www.santuariodocaraca.com.br/",
+        "id": "serra_do_papagaio",
+        "nome": "PE Serra do Papagaio",
+        "municipios": ["Aiuruoca","Alagoa","Baependi","Itamonte","Pouso Alto"],
+        "regiao": "Mantiqueira / Sul de MG",
+        "coordenadas_base": { "latitude": -21.6800, "longitude": -44.7000 },
+        "geofence_raio_m": 1200,
+        "resumo": "Parque estadual que protege remanescentes de Mata Atlântica e campos de altitude, interligando-se ao Parque Nacional do Itatiaia na divisa, com inúmeras trilhas e cachoeiras. :contentReference[oaicite:1]{index=1}",
+        "infraestrutura": ["Trilhas (diversos roteiros)", "Centro de visitantes (administrativo)", "Sinalização básica", "Portarias regionais"],
+        "status_operacao": "Aberto (visitação com regime próprio do IEF) :contentReference[oaicite:2]{index=2}",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [
-            { "poi_id": "caraça_santuario", "nome": "Santuário do Caraça", "tipo": "Cultural", "latitude": -20.1000, "longitude": -43.4800, "quiz_id": null, "desc_curta": "Centro histórico e religioso em meio à serra." },
-            { "poi_id": "caraça_cascatinha", "nome": "Cascatinha do Caraça", "tipo": "Natural", "latitude": -20.1100, "longitude": -43.4700, "quiz_id": null, "desc_curta": "Cachoeira mais próxima da sede; trilha leve." }
+            { "poi_id": "pico_papagaio", "nome": "Pico do Papagaio", "tipo": "Natural", "latitude": -21.7000, "longitude": -44.7000, "quiz_id": null, "desc_curta": "Pico icônico do parque, bastante visitado." },
+            { "poi_id": "cachoeira_dos_garcias", "nome": "Cachoeira dos Garcias", "tipo": "Natural", "latitude": -21.6800, "longitude": -44.6800, "quiz_id": null, "desc_curta": "Uma das quedas de água de destaque no parque." }
         ],
-        "badges_exclusivos": ["Selo_Caraça_Peregrino"]
+        "badges_exclusivos": ["Selo_Papagaio_Trilhas"]
     },
     {
         "id": "serra_do_rola_moca",
@@ -237,15 +253,31 @@ const PARKS_DATA = [
         "badges_exclusivos": ["Selo_RolaMoca_Guarda_Agua"]
     },
     {
-        "id": "sete_salões",
-        "nome": "PE Sete Salões",
+        "id": "serra_nova_talhado",
+        "nome": "PE Serra Nova e Talhado",
+        "municipios": ["Rio Pardo de Minas","Serranópolis de Minas","Mato Verde","Porteirinha","Riacho dos Machados"],
+        "regiao": "Norte / Vale do Jequitinhonha / Norte de MG",
+        "coordenadas_base": { "latitude": -15.8700, "longitude": -42.7200 },
+        "geofence_raio_m": 900,
+        "resumo": "Parque estadual florestal criado para proteger ecossistemas da região norte de Minas Gerais, com cerca de 12.658,29 ha. :contentReference[oaicite:3]{index=3}",
+        "infraestrutura": ["Trilhas (a confirmar)", "Educação ambiental (a confirmar)"],
+        "status_operacao": "Aberto (ou a confirmar modalidade de visitação) :contentReference[oaicite:4]{index=4}",
+        "link_agendamento": "url_de_agendamento_a_confirmar",
+        "pontos_interesse": [
+            { "poi_id": "mirante_serra_nova", "nome": "Mirante da Serra Nova", "tipo": "Natural", "latitude": -15.8700, "longitude": -42.7200, "quiz_id": null, "desc_curta": "Ponto de observação panorâmica dentro da unidade." }
+        ],
+        "badges_exclusivos": ["Selo_SerraNova_Reserva"]
+    },
+    {
+        "id": "serra_verde",
+        "nome": "PE Serra Verde",
         "municipios": ["region_to_confirm"],
-        "regiao": "Vale do Rio Doce / Leste de Minas",
+        "regiao": "Região a confirmar",
         "coordenadas_base": { "latitude": null, "longitude": null },
         "geofence_raio_m": 600,
-        "resumo": "Parque com formações rochosas e cavernas, incluindo a Gruta Sete Salões; potencial para visitação ecológica e cultural.",
-        "infraestrutura": ["Grutas", "Trilhas (a confirmar)"],
-        "status_operacao": "A confirmar (visitação restrita)",
+        "resumo": "Parque estadual listado em guias de MG; dados de infraestrutura, visitas e pontos de interesse ainda precisam ser coletados.",
+        "infraestrutura": ["Trilhas (a confirmar)"],
+        "status_operacao": "A confirmar",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [],
         "badges_exclusivos": []
@@ -265,20 +297,6 @@ const PARKS_DATA = [
             { "poi_id": "lapa_sumidouro", "nome": "Lapa do Sumidouro", "tipo": "Arqueológico", "latitude": -19.5860, "longitude": -43.9570, "quiz_id": null, "desc_curta": "Gruta com fósseis e vestígios pré-históricos." }
         ],
         "badges_exclusivos": ["Selo_Sumidouro_Explorador"]
-    },
-    {
-        "id": "vale_pereiro",
-        "nome": "PE Vale do Pereiro",
-        "municipios": ["region_to_confirm"],
-        "regiao": "Região a confirmar",
-        "coordenadas_base": { "latitude": null, "longitude": null },
-        "geofence_raio_m": 400,
-        "resumo": "Parque estadual de pequeno porte, com vegetação de transição e cursos d’água — informações complementares a confirmar.",
-        "infraestrutura": ["Trilhas (básico)"],
-        "status_operacao": "A confirmar",
-        "link_agendamento": "url_de_agendamento_a_confirmar",
-        "pontos_interesse": [],
-        "badges_exclusivos": []
     }
 
 ];
