@@ -154,24 +154,52 @@ html, body {
 
 /* HOME VIEW ESPECÍFICA */
 
-.map-area {
+/* Contêiner de progresso (Barra de progresso) */
+#progress-bar-container {
+    margin: 15px; /* Mantém o espaçamento dos cards */
+    padding: 10px;
+}
+
+/* ESTRUTURA ESTÁVEL PARA O MAPA (ALTRA FIXA) */
+.map-responsive {
+    position: relative;
     width: 100%;
-    height: 350px; /* Altura generosa para o mapa */
-    background-color: var(--color-gray);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* Altura fixa (em pixels) é a forma mais robusta de garantir que o iframe apareça no celular */
+    height: 300px; 
+    margin: 15px 0; 
+}
+
+.map-responsive iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: block; /* Garante que o iframe não seja um elemento inline problemático */
+}
+
+/* Estilo do contêiner principal do mapa */
+.map-area {
+    /* Garante que o contêiner não tenha altura fixa, permitindo que o iframe cresça */
+    width: 100%;
+    height: auto; 
+    display: block;
+    padding: 0;
+    /* A classe .map-responsive está no mesmo elemento no HTML, 
+       mas definimos a área para garantir que não haja conflito. */
+}
+
+/* Estilo para a barra de progresso horizontal */
+.map-status-text {
+    font-size: 1.1em;
+    font-weight: bold;
     color: var(--color-text-dark);
 }
 
-.map-placeholder {
-    text-align: center;
-    opacity: 0.7;
-}
 
+/* ESTILOS PARA O BOTÃO FLUTUANTE (FAB) */
 .fab {
     position: fixed;
-    bottom: 75px; /* Acima da nav-bar */
+    bottom: 75px; 
     right: 20px;
     width: 56px;
     height: 56px;
@@ -180,8 +208,7 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 999;
 }
-
-/* DETALHE DO PARQUE VIEW ESPECÍFICA */
+/* FIM HOME VIEW ESPECÍFICA */
 
 .hero-image {
     height: 250px;
