@@ -301,24 +301,42 @@ const PARKS_DATA = [
     }
 ];
 
+let html5QrCode = null; 
+
 // ====================================================================
-// CATÁLOGO CENTRAL DE BADGES (MOSTRAR TUDO NA TELA DE CONQUISTAS)
+// CATÁLOGO CENTRAL DE BADGES (14 PARQUES + COLEÇÃO)
 // ====================================================================
 const BADGES_CATALOG = [
-    // BADGES DE VISITA INDIVIDUAL (Baseado nos IDs que você já tem)
+    // BADGES DE VISITA INDIVIDUAL (14 PARQUES)
     { code: "Selo_Biribiri_Visita", nome: "Biribiri Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Biribiri.", xp: 150, icon: "tree" },
+    { code: "Badge_Arquiteto_da_Historia", nome: "Arquiteto da História", tipo: "Quiz", descricao: "Complete o quiz histórico da Vila de Biribiri.", xp: 100, icon: "scroll" },
     { code: "Selo_Ibitipoca_Visita", nome: "Ibitipoca Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Ibitipoca.", xp: 150, icon: "mountain" },
+    { code: "Badge_Mestre_das_Grutas", nome: "Mestre das Grutas", tipo: "Quiz", descricao: "Complete o quiz de geologia das grutas de Ibitipoca.", xp: 100, icon: "cave" },
     { code: "Selo_Itacolomi_Visita", nome: "Itacolomi Desvendado", tipo: "Visita", descricao: "Primeira visita ao PE Itacolomi.", xp: 150, icon: "flag" },
     { code: "Selo_LapaGrande_Historia", nome: "Guardião da Lapa Grande", tipo: "Visita", descricao: "Primeira visita ao PE Lapa Grande.", xp: 150, icon: "cave" },
-    // (ADICIONE AQUI MAIS 15 BADGES DE VISITA, um para cada parque restante, usando o formato "Selo_[ID_PARQUE]_Visita")
+    { code: "Selo_Krambeck_Reserva", nome: "Mata Krambeck Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Mata do Krambeck.", xp: 150, icon: "leaf" },
+    { code: "Selo_NovaBaden_Conservacao", nome: "Nova Baden Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Nova Baden.", xp: 150, icon: "sun" },
+    { code: "Selo_PauFurado_Exploracao", nome: "Pau Furado Desvendado", tipo: "Visita", descricao: "Primeira visita ao PE Pau Furado.", xp: 150, icon: "drill" },
+    { code: "Selo_PicoItambe_Alto", nome: "Pico do Itambé Desvendado", tipo: "Visita", descricao: "Primeira visita ao PE Pico do Itambé.", xp: 150, icon: "altitude" },
+    { code: "Selo_RioDoce_Lagoas", nome: "Rio Doce Desvendado", tipo: "Visita", descricao: "Primeira visita ao PE Rio Doce.", xp: 150, icon: "water" },
+    { code: "Selo_RioPreto_Aventura", nome: "Rio Preto Desvendado", tipo: "Visita", descricao: "Primeira visita ao PE Rio Preto.", xp: 150, icon: "river" },
+    { code: "Selo_SerraBrigadeiro_Alpinista", nome: "Serra do Brigadeiro Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Serra do Brigadeiro.", xp: 150, icon: "climb" },
+    { code: "Selo_SerraPapagaio_Trilhas", nome: "Serra do Papagaio Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Serra do Papagaio.", xp: 150, icon: "foot" },
+    { code: "Selo_RolaMoca_Guarda_Agua", nome: "Rola Moça Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Serra do Rola-Moça.", xp: 150, icon: "faucet" },
+    { code: "Selo_SerraNova_Reserva", nome: "Serra Nova Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Serra Nova e Talhado.", xp: 150, icon: "reserve" },
+    { code: "Selo_Sumidouro_Explorador", nome: "Sumidouro Desvendado", tipo: "Visita", descricao: "Primeira visita ao PE Sumidouro.", xp: 150, icon: "archaeology" },
 
     // BADGES DE COLEÇÃO / MARCO
     { code: "Badge_Primeiro_Passo", nome: "Primeiro Check-in", tipo: "Marco", descricao: "Primeira visita registrada no aplicativo.", xp: 50, icon: "shoe-prints" },
-    { code: "Badge_Cinco_Parques", nome: "Aventureiro Nível 5", tipo: "Coleção", descricao: "Visite 5 Parques Estaduais diferentes.", xp: 500, icon: "star" },
-    { code: "Badge_Lenda_das_Minas", nome: "Lenda dos 19 PE's", tipo: "Coleção", descricao: "Visite todos os Parques Estaduais.", xp: 5000, icon: "crown" }
+    
+    { code: "Badge_Aventureiro_Nivel5", nome: "Explorador da Mata", tipo: "Coleção", descricao: "Visite 5 Parques Estaduais diferentes.", xp: 250, icon: "compass" },
+    
+    { code: "Badge_Aventureiro_Nivel10", nome: "Guia da Estrada Real", tipo: "Coleção", descricao: "Visite 10 Parques Estaduais diferentes.", xp: 750, icon: "map-marked-alt" },
+    
+    { code: "Badge_Aventureiro_Nivel15", nome: "Conquistador Mineiro", tipo: "Coleção", descricao: "Visite 15 Parques Estaduais diferentes.", xp: 1250, icon: "trophy" },
+    
+    { code: "Badge_Lenda_das_Minas", nome: "Lenda dos 19 PE's", tipo: "Coleção", descricao: "Visite todos os 19 Parques Estaduais de Minas Gerais.", xp: 5000, icon: "crown" }
 ];
-
-let html5QrCode = null; 
 
 // ====================================================================
 // FUNÇÕES DE NAVEGAÇÃO E UTILITY (ESCOPO GLOBAL)
@@ -389,6 +407,65 @@ function renderHomeProgress() {
     `;
 }
 
+// ====================================================================
+// FUNÇÃO DE VERIFICAÇÃO DE CONQUISTAS (REVISADA)
+// ====================================================================
+
+function checkCollectionBadges(visitsCount, newXP) {
+    let unlockedBadges = [];
+
+    // O status de conquista será verificado em relação ao número total de visitas ÚNICAS (visitsCount)
+    // E os códigos de badge na lista 'conqueredBadges'
+
+    // MARCO 1: Primeiro Check-in
+    if (visitsCount === 1) {
+        unlockedBadges.push("Badge_Primeiro_Passo");
+    }
+
+    // MARCO 2: Aventureiro Nível 5
+    if (visitsCount === 5) {
+        unlockedBadges.push("Badge_Aventureiro_Nivel5");
+    }
+    
+    // MARCO 3: Guia da Estrada Real (10 Parques)
+    if (visitsCount === 10) {
+        unlockedBadges.push("Badge_Aventureiro_Nivel10");
+    }
+
+    // MARCO 4: Conquistador Mineiro (15 Parques)
+    if (visitsCount === 15) {
+        unlockedBadges.push("Badge_Aventureiro_Nivel15");
+    }
+
+    // MARCO FINAL: Lenda dos 19 PE's (Objetivo Final)
+    // Usamos o número 19 como objetivo final, independentemente de quantos parques estão no PARKS_DATA agora.
+    if (visitsCount === 19) { 
+        unlockedBadges.push("Badge_Lenda_das_Minas");
+    }
+    
+    // Processamento e Notificação (Este bloco permanece o mesmo)
+    if (unlockedBadges.length > 0) {
+        let conqueredBadges = JSON.parse(localStorage.getItem('conqueredBadges') || '[]');
+        
+        unlockedBadges.forEach(code => {
+            if (!conqueredBadges.includes(code)) {
+                conqueredBadges.push(code);
+                
+                const badgeInfo = BADGES_CATALOG.find(b => b.code === code);
+                if (badgeInfo) {
+                     alert(`⭐ NOVA CONQUISTA DE COLEÇÃO! ⭐\nVocê desbloqueou: ${badgeInfo.nome}!\nGanhou mais +${badgeInfo.xp} XP!`);
+                     newXP += badgeInfo.xp;
+                     localStorage.setItem('userXP', newXP.toString());
+                     updateProfileDisplay(newXP);
+                }
+            }
+        });
+        localStorage.setItem('conqueredBadges', JSON.stringify(conqueredBadges));
+    }
+    
+    return newXP; // Retorna o XP atualizado
+}
+
 function processSuccessfulCheckin(park) {
     const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
     const xp = parseInt(localStorage.getItem('userXP') || '0');
@@ -398,8 +475,13 @@ function processSuccessfulCheckin(park) {
     visits.push(park.id);
     localStorage.setItem('userVisits', JSON.stringify(visits));
     
-    const xpGained = 150; 
-    const newXP = xp + xpGained;
+    let xpGained = 150; // XP base pela visita
+    let currentXP = parseInt(localStorage.getItem('userXP') || '0');
+    let newXP = currentXP + xpGained;
+    
+    // VERIFICA SE HOUVE CONQUISTAS DE COLEÇÃO e atualiza o XP
+    newXP = checkCollectionBadges(visits.length, newXP);
+    
     localStorage.setItem('userXP', newXP.toString());
     
     const badgeName = park.badges_exclusivos[0] || "Selo de Visitação";
@@ -556,36 +638,30 @@ function renderParkList() {
 console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista. Listeners Ativados.`);
 } // <-- Fim da função renderParkList
 
+
 // ====================================================================
-// FUNÇÃO DE RENDERIZAÇÃO DA TELA DE BADGES
+// FUNÇÃO DE RENDERIZAÇÃO DA TELA DE BADGES (REVISADA)
 // ====================================================================
 
 function renderBadgesView() {
     const badgesView = document.getElementById('badges-view');
+    // Coleções salvas: visitas (ID dos parques) e conqueredBadges (código dos badges)
     const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
+    const conqueredBadges = JSON.parse(localStorage.getItem('conqueredBadges') || '[]');
     let badgesHTML = '<h1 class="park-title" style="padding: 15px 15px 0;">Galeria de Conquistas</h1>';
     
-    // ATENÇÃO: VOCÊ DEVE INCLUIR AQUI O ARRAY 'BADGES_CATALOG' NO SEU CÓDIGO FINAL
-    const BADGES_CATALOG = [
-        { code: "Selo_Biribiri_Visita", nome: "Biribiri Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Biribiri.", xp: 150, icon: "tree" },
-        { code: "Selo_Ibitipoca_Visita", nome: "Ibitipoca Desvendada", tipo: "Visita", descricao: "Primeira visita ao PE Ibitipoca.", xp: 150, icon: "mountain" },
-        { code: "Badge_Primeiro_Passo", nome: "Primeiro Check-in", tipo: "Marco", descricao: "Primeira visita registrada no aplicativo.", xp: 50, icon: "shoe-prints" },
-        { code: "Badge_Lenda_das_Minas", nome: "Lenda dos 19 PE's", tipo: "Coleção", descricao: "Visite todos os Parques Estaduais.", xp: 5000, icon: "crown" }
-    ];
-
-    // Adiciona o estilo de grid para os itens (temporariamente inline)
+    // Adiciona o estilo de grid para os itens
     badgesHTML += '<div class="badges-grid" style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 10px 15px;">';
 
     BADGES_CATALOG.forEach(badge => {
-        const isConquered = visits.includes(badge.code) || 
-                            (badge.code === "Badge_Lenda_das_Minas" && visits.length === PARKS_DATA.length) ||
-                            (visits.includes(badge.code) || visits.length >= 10 && badge.code === "Badge_Aventureiro_Nivel10"); // Lógica expandida
+        // Lógica: Conquistado se o código do badge estiver na lista de visits OU na lista de conqueredBadges
+        const isConquered = visits.includes(badge.code) || conqueredBadges.includes(badge.code); 
                             
         const opacity = isConquered ? 1.0 : 0.3;
         const statusText = isConquered ? 'Conquistado!' : 'Bloqueado';
 
         badgesHTML += `
-            <div class="badge-item" style="width: 150px; text-align: center; margin: 10px; opacity: ${opacity};">
+            <div class="badge-item" style="width: 150px; text-align: center; margin: 10px; opacity: ${opacity}; cursor: pointer;" title="${badge.descricao}">
                 <i class="fas fa-${badge.icon}" style="font-size: 3em; color: ${isConquered ? 'var(--color-secondary)' : 'var(--color-gray)'};"></i>
                 <h4 style="margin: 5px 0 2px;">${badge.nome}</h4>
                 <p style="font-size: 0.8em; color: #666;">${statusText}</p>
