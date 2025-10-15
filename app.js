@@ -1,4 +1,5 @@
 // DADOS INCORPORADOS DIRETAMENTE NO JS (Client-Side Database)
+// ATENÇÃO: ESTA LISTA DEVE SER COMPLETA. Se necessário, adicione o restante dos 19 parques.
 const PARKS_DATA = [
     {
         "id": "biribiri",
@@ -73,7 +74,7 @@ const PARKS_DATA = [
         "regiao": "Zona da Mata / Metropolitana de Juiz de Fora",
         "coordenadas_base": { "latitude": -21.7700, "longitude": -43.3500 },
         "geofence_raio_m": 500,
-        "resumo": "Parque Estadual criado para preservar remanescentes de Mata Atlântica em ambiente urbano, incorporando o Jardim Botânico e a Mata da Remonta. Área de cerca de 291,98 ha. :contentReference[oaicite:0]{index=0}",
+        "resumo": "Parque Estadual criado para preservar remanescentes de Mata Atlântica em ambiente urbano, incorporando o Jardim Botânico e a Mata da Remonta. Área de cerca de 291,98 ha.",
         "infraestrutura": ["Trilhas (a definir)", "Educação ambiental", "Conexão com jardins/botânica"],
         "status_operacao": "Em processo de implantação / criação oficial (visitação ainda em fase de regulamentação)",
         "link_agendamento": "url_de_agendamento_a_confirmar",
@@ -225,9 +226,9 @@ const PARKS_DATA = [
         "regiao": "Mantiqueira / Sul de MG",
         "coordenadas_base": { "latitude": -21.6800, "longitude": -44.7000 },
         "geofence_raio_m": 1200,
-        "resumo": "Parque estadual que protege remanescentes de Mata Atlântica e campos de altitude, interligando-se ao Parque Nacional do Itatiaia na divisa, com inúmeras trilhas e cachoeiras. :contentReference[oaicite:1]{index=1}",
+        "resumo": "Parque estadual que protege remanescentes de Mata Atlântica e campos de altitude, interligando-se ao Parque Nacional do Itatiaia na divisa, com inúmeras trilhas e cachoeiras.",
         "infraestrutura": ["Trilhas (diversos roteiros)", "Centro de visitantes (administrativo)", "Sinalização básica", "Portarias regionais"],
-        "status_operacao": "Aberto (visitação com regime próprio do IEF) :contentReference[oaicite:2]{index=2}",
+        "status_operacao": "Aberto (visitação com regime próprio do IEF)",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [
             { "poi_id": "pico_papagaio", "nome": "Pico do Papagaio", "tipo": "Natural", "latitude": -21.7000, "longitude": -44.7000, "quiz_id": null, "desc_curta": "Pico icônico do parque, bastante visitado." },
@@ -259,9 +260,9 @@ const PARKS_DATA = [
         "regiao": "Norte / Vale do Jequitinhonha / Norte de MG",
         "coordenadas_base": { "latitude": -15.8700, "longitude": -42.7200 },
         "geofence_raio_m": 900,
-        "resumo": "Parque estadual florestal criado para proteger ecossistemas da região norte de Minas Gerais, com cerca de 12.658,29 ha. :contentReference[oaicite:3]{index=3}",
+        "resumo": "Parque estadual florestal criado para proteger ecossistemas da região norte de Minas Gerais, com cerca de 12.658,29 ha.",
         "infraestrutura": ["Trilhas (a confirmar)", "Educação ambiental (a confirmar)"],
-        "status_operacao": "Aberto (ou a confirmar modalidade de visitação) :contentReference[oaicite:4]{index=4}",
+        "status_operacao": "Aberto (ou a confirmar modalidade de visitação)",
         "link_agendamento": "url_de_agendamento_a_confirmar",
         "pontos_interesse": [
             { "poi_id": "mirante_serra_nova", "nome": "Mirante da Serra Nova", "tipo": "Natural", "latitude": -15.8700, "longitude": -42.7200, "quiz_id": null, "desc_curta": "Ponto de observação panorâmica dentro da unidade." }
@@ -298,12 +299,10 @@ const PARKS_DATA = [
         ],
         "badges_exclusivos": ["Selo_Sumidouro_Explorador"]
     }
-
 ];
 
 
-
-let html5QrCode = null; 
+let html5QrCode = null; 
 
 // ====================================================================
 // FUNÇÕES DE NAVEGAÇÃO E UTILITY (ESCOPO GLOBAL)
@@ -327,6 +326,51 @@ function navigateTo(viewId) {
 function updateProfileDisplay(currentXP) {
     const xpScoreElement = document.querySelector('.xp-score');
     if (xpScoreElement) { xpScoreElement.innerText = `${currentXP} XP`; }
+}
+
+// ====================================================================
+// FUNÇÃO DE CÁLCULO DE PROGRESSO
+// ====================================================================
+
+function calculateProgress() {
+    const totalParks = PARKS_DATA.length;
+    const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
+    const visitsCount = visits.length;
+    
+    const percentage = (visitsCount / totalParks) * 100;
+    
+    return {
+        total: totalParks,
+        completed: visitsCount,
+        percent: Math.round(percentage)
+    };
+}
+
+// ====================================================================
+// FUNÇÃO DE RENDERIZAÇÃO DA HOME VIEW (BARRA DE PROGRESSO CLEAN)
+// ====================================================================
+
+function renderHomeProgress() {
+    const progressBarContainer = document.getElementById('progress-bar-container');
+    const progress = calculateProgress();
+    
+    // HTML para a barra horizontal e o status
+    progressBarContainer.innerHTML = `
+        <h4 style="margin-bottom: 5px; color: var(--color-text-dark);">
+            🗺️ Progresso da Expedição: ${progress.completed} de ${progress.total} Parques
+        </h4>
+        <div style="background-color: var(--color-gray); border-radius: 4px; height: 12px; overflow: hidden;">
+            <div style="
+                width: ${progress.percent}%; 
+                height: 100%; 
+                background-color: var(--color-primary); 
+                transition: width 0.5s;
+            "></div>
+        </div>
+        <p style="text-align: right; font-size: 0.9em; margin-top: 5px; color: var(--color-primary); font-weight: bold;">
+            ${progress.percent}% Completo
+        </p>
+    `;
 }
 
 function processSuccessfulCheckin(park) {
@@ -502,11 +546,12 @@ function renderParkList() {
 // ====================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Referências do DOM (Variáveis que só existem aqui dentro)
     const fab = document.querySelector('.fab');
     const qrReaderDiv = document.getElementById('reader');
     const qrReaderCloseBtn = document.querySelector('#reader-close-btn');
 
-    // Funções Locais do QR Code (Dependem das referências DOM)
+    // Funções Locais de QR Code (Dependem das referências DOM)
     function stopQrScanner() {
         if (html5QrCode && html5QrCode.isScanning) { 
             html5QrCode.stop().then(() => { qrReaderDiv.style.display = 'none'; }).catch(err => { qrReaderDiv.style.display = 'none'; }); 
@@ -514,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startQrScanner() {
-        const qrContainer = document.getElementById('qr-reader-container');
+        const qrContainer = document.querySelector('#qr-reader-container');
         if (!qrContainer) { alert("Erro fatal: Contêiner do QR Code não encontrado no HTML."); console.error("ID #qr-reader-container não encontrado."); return; }
 
         qrReaderDiv.style.display = 'flex';
@@ -542,7 +587,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const activeTab = e.target.innerText.trim(); 
                 
-                // Usamos o ID do parque para buscar os dados corretos
                 const parkName = document.querySelector('#detail-view .park-content .park-title').innerText;
                 const currentPark = PARKS_DATA.find(p => p.nome === parkName); 
                 
@@ -558,24 +602,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBack = document.querySelector('.btn-back');
 
     navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
-
     if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('list-view'); }); }
-
     if (fab) { fab.addEventListener('click', startQrScanner); }
     if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
 
 
-    // ====================================================================
-    // BLOCO FINAL DE INICIALIZAÇÃO E RENDERIZAÇÃO
+    // BLOCO FINAL DE EXECUÇÃO
     // ====================================================================
     
-    renderParkList(); 
+    // 1. Renderiza a lista de parques (e ativa os listeners dos Cards)
+    renderParkList(); 
+
+    // 2. Ativa os listeners de troca de abas
+    setupTabListeners();
+
+    // 3. Renderiza o Progresso na Home View (Isso injeta o HTML da barra)
+    renderHomeProgress();
+
+    // 4. Navega para a Home View (Visão Inicial do Usuário)
     navigateTo('home-view');
-    
+
+    // 5. Inicia o Perfil
     const initialXP = parseInt(localStorage.getItem('userXP') || '0');
     updateProfileDisplay(initialXP);
-    
-    setupTabListeners(); // Ativa os listeners de troca de abas
     
     console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
 });
