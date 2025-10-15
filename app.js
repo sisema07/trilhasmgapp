@@ -283,13 +283,14 @@ const PARKS_DATA = [
 
 ];
 
-// Variável para a instância do leitor de QR Code
+
+
 let html5QrCode = null; 
 
+// ====================================================================
+// FUNÇÕES DE NAVEGAÇÃO E UTILITY (ESCOPO GLOBAL)
+// ====================================================================
 
-// ====================================================================
-// FUNÇÃO DE NAVEGAÇÃO MOVIDA PARA O ESCOPO GLOBAL (CORREÇÃO DE ERRO)
-// ====================================================================
 function navigateTo(viewId) {
     const views = document.querySelectorAll('.view');
     const navItems = document.querySelectorAll('.nav-item');
@@ -350,11 +351,13 @@ function onScanSuccess(decodedText) {
     } else { alert("❌ QR Code Inválido. Escaneie apenas códigos oficiais do Trilhas de Minas."); }
 }
 
-
 // ====================================================================
 // FUNÇÕES DE RENDERIZAÇÃO E EVENTOS DE DETALHE (ESCOPO GLOBAL)
 // ====================================================================
 
+/**
+ * Funções auxiliares para criar o HTML dos cards e das abas
+ */
 function createParkCardHTML(park) {
     const visits = JSON.parse(localStorage.getItem('userVisits') || '[]');
     const isVisited = visits.includes(park.id);
@@ -375,10 +378,6 @@ function createParkCardHTML(park) {
     `;
 }
 
-/**
- * Função que ativa os event listeners para o botão 'Ver Detalhes'.
- * ESTA FUNÇÃO PRECISA ESTAR NO ESCOPO GLOBAL PARA SER CHAMADA POR renderParkList()
- */
 function setupCardListeners() {
     const detailButtons = document.querySelectorAll('.view-details');
     
@@ -393,7 +392,6 @@ function setupCardListeners() {
         });
     });
 
-    // Adiciona listener para o card de destaque na Home (também usa a função global)
     const featuredCardButton = document.querySelector('.featured-card .btn-secondary');
     if (featuredCardButton) {
         featuredCardButton.addEventListener('click', () => {
@@ -405,6 +403,50 @@ function setupCardListeners() {
     }
 }
 
+function renderTabContent(park, tabName) {
+    const tabContent = document.querySelector('#detail-view .tab-content.active');
+    if (!tabContent) return;
+
+    let contentHTML = '';
+
+    if (tabName === 'Informações') {
+        contentHTML = `
+            <h3>Resumo</h3>
+            <p>${park.resumo}</p>
+            <h3>Infraestrutura</h3>
+            <ul class="infra-list">
+                ${park.infraestrutura ? park.infraestrutura.map(item => `<li><i class="fas fa-check-circle"></i> ${item}</li>`).join('') : '<li>Nenhuma informação de infraestrutura detalhada.</li>'}
+            </ul>
+            <p style="margin-top: 10px;">Status: <strong>${park.status_operacao || 'Não informado'}</strong></p>
+        `;
+    } else if (tabName === 'Trilhas/POIs') {
+        contentHTML = `
+            <h3>Pontos de Interesse (POIs)</h3>
+            ${park.pontos_interesse && park.pontos_interesse.length > 0
+                ? park.pontos_interesse.map(poi => `
+                    <div class="poi-card" style="border-left: 5px solid var(--color-primary); padding: 10px; margin-bottom: 10px; background-color: #f9f9f9;">
+                        <h4>${poi.nome} <i class="fas fa-mountain" style="color: var(--color-primary); margin-left: 5px;"></i></h4>
+                        <p>${poi.desc_curta}</p>
+                        <p style="font-size: 0.8em; color: #888;">Tipo: ${poi.tipo}</p>
+                    </div>
+                `).join('')
+                : '<p>Nenhuma trilha ou POI detalhado para este parque.</p>'
+            }
+        `;
+    } else if (tabName === 'Quizzes') {
+        contentHTML = `
+            <h3>Desafios de Conhecimento</h3>
+            <p>Responda a um quiz sobre o parque para ganhar o Badge de Conhecimento!</p>
+            <button class="btn btn-primary btn-full-width" style="margin-top: 15px;">
+                <i class="fas fa-question-circle"></i> Iniciar Quiz (${park.id})
+            </button>
+            <p style="margin-top: 10px; font-size: 0.9em; color: var(--color-secondary);">Recompensa: Badge de Conhecimento!</p>
+        `;
+    }
+
+    tabContent.innerHTML = contentHTML;
+}
+
 function renderParkDetail(park) {
     const detailView = document.getElementById('detail-view');
     
@@ -414,19 +456,9 @@ function renderParkDetail(park) {
     }
 
     detailView.querySelector('.park-title').innerText = park.nome;
-
-    const tabContent = detailView.querySelector('.tab-content.active');
-    if (tabContent) {
-        tabContent.innerHTML = `
-            <h3>Resumo</h3>
-            <p>${park.resumo}</p>
-            <h3>Infraestrutura</h3>
-            <ul class="infra-list">
-                ${park.infraestrutura ? park.infraestrutura.map(item => `<li><i class="fas fa-check-circle"></i> ${item}</li>`).join('') : '<li>Nenhuma informação de infraestrutura detalhada.</li>'}
-            </ul>
-            <p style="margin-top: 10px;">Status: <strong>${park.status_operacao || 'Não informado'}</strong></p>
-        `;
-    }
+    
+    // CORREÇÃO FASE 6 (Troca de Abas): Define o conteúdo padrão (Informações) e depois navega
+    renderTabContent(park, 'Informações');
     
     navigateTo('detail-view');
 }
@@ -442,7 +474,7 @@ function renderParkList() {
     });
 
     listView.innerHTML = listHTML;
-    setupCardListeners(); // Chama a função global que ativa o clique nos cards
+    setupCardListeners(); 
     console.log(`✅ ${PARKS_DATA.length} Parques renderizados na Lista. Listeners Ativados.`);
 }
 
@@ -452,12 +484,11 @@ function renderParkList() {
 // ====================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Referências do DOM (Variáveis que só existem aqui dentro)
     const fab = document.querySelector('.fab');
     const qrReaderDiv = document.getElementById('reader');
     const qrReaderCloseBtn = document.querySelector('#reader-close-btn');
 
-    // Funções do QR Code (Dependem das referências DOM)
+    // Funções Locais do QR Code (Dependem das referências DOM)
     function stopQrScanner() {
         if (html5QrCode && html5QrCode.isScanning) { 
             html5QrCode.stop().then(() => { qrReaderDiv.style.display = 'none'; }).catch(err => { qrReaderDiv.style.display = 'none'; }); 
@@ -482,17 +513,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 100);
     }
     
+    function setupTabListeners() {
+        const tabsContainer = document.querySelector('.tabs-container');
+        if (!tabsContainer) return; 
+
+        tabsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('tab')) {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const activeTab = e.target.innerText.trim(); 
+                
+                // Usamos o ID do parque para buscar os dados corretos
+                const parkName = document.querySelector('#detail-view .park-content .park-title').innerText;
+                const currentPark = PARKS_DATA.find(p => p.nome === parkName); 
+                
+                if (currentPark) {
+                    renderTabContent(currentPark, activeTab);
+                }
+            }
+        });
+    }
+
     // Event Listeners de Navegação (Usam a função global navigateTo)
     const navItems = document.querySelectorAll('.nav-item');
     const btnBack = document.querySelector('.btn-back');
 
     navItems.forEach(item => { item.addEventListener('click', (e) => { e.preventDefault(); const viewId = item.getAttribute('href').substring(1); navigateTo(viewId); }); });
-    if (btnBack) { 
-        btnBack.addEventListener('click', () => { 
-            // CORREÇÃO UX: Volta para a lista de parques (#list-view)
-            navigateTo('list-view'); 
-        }); 
-    }
+
+    if (btnBack) { btnBack.addEventListener('click', () => { navigateTo('list-view'); }); }
+
     if (fab) { fab.addEventListener('click', startQrScanner); }
     if (qrReaderCloseBtn) { qrReaderCloseBtn.addEventListener('click', stopQrScanner); }
 
@@ -501,16 +551,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // BLOCO FINAL DE INICIALIZAÇÃO E RENDERIZAÇÃO
     // ====================================================================
     
-    // 1. Renderiza a lista de parques na View (e ativa os listeners)
     renderParkList(); 
-
-    // 2. Navega para a Home View
     navigateTo('home-view');
     
-    // 3. Inicia o Perfil
     const initialXP = parseInt(localStorage.getItem('userXP') || '0');
     updateProfileDisplay(initialXP);
     
+    setupTabListeners(); // Ativa os listeners de troca de abas
+    
     console.log(`✅ Projeto iniciado e totalmente funcional. Total de parques carregados: ${PARKS_DATA.length}`);
 });
-
