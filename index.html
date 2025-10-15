@@ -47,78 +47,88 @@
     <main class="main-content">
 
         <section id="home-view" class="view active">
-            <div class="map-area">
-                <div class="map-placeholder">
-                    <h2>Mapa de Minas Gerais</h2>
-                    <p>Pins verdes: visitados. Pins cinzas: a visitar.</p>
-                </div>
-            </div>
+         
+                        <div id="progress-bar-container" class="card">
+            </div>
 
-            <div class="card featured-card">
-                <h3>Próximo Desafio: Ibitipoca!</h3>
-                <p>Visite e ganhe +100 XP e o Selo de Exploração!</p>
-                <button class="btn btn-secondary">Ver Detalhes</button>
-            </div>
+                        <div class="map-area map-responsive">
+                <iframe 
+                    src="https://www.google.com/maps/d/embed?mid=1wh7GxT4BGPTMWEfc1UI_R9yhgosw4dQ&ehbc=2E312F" 
+                    width="100%" 
+                    height="100%" 
+                    frameborder="0" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
 
-            <button class="fab btn-primary">
-                <i class="fas fa-qrcode"></i>
-            </button>
-        </section>
+                        <div class="card featured-card">
+                <h3>Próximo Desafio: Ibitipoca!</h3>
+                <p>Visite e ganhe +100 XP e o Selo de Exploração!</p>
+                <button class="btn btn-secondary">Ver Detalhes</button>
+            </div>
 
-        <section id="detail-view" class="view hidden">
-            <div class="hero-image">
-                <button class="btn-back"><i class="fas fa-arrow-left"></i> Voltar</button>
-            </div>
-            
-            <div class="park-content">
-                <h1 class="park-title">PE Ibitipoca</h1>
-                <div class="card status-card">
-                    <button class="btn btn-primary btn-full-width">
-                        <i class="fas fa-qrcode"></i> Escanear QR Code de Check-in
-                    </button>
-                    <p class="status-message">Para validar a visita, escaneie o código na entrada do parque.</p>
-                </div>
-                
-                <div class="tabs-container">
-                    <button class="tab active">Informações</button>
-                    <button class="tab">Trilhas/POIs</button>
-                    <button class="tab">Quizzes</button>
-                </div>
+                        <button class="fab btn-primary">
+                <i class="fas fa-qrcode"></i>
+            </button>
+        </section>
 
-                <div class="tab-content active">
-                    <h3>Resumo e Infraestrutura</h3>
-                    <p>O Parque Estadual de Ibitipoca é famoso por seus picos, grutas e a icônica Janela do Céu. Acesso limitado, agende antes de visitar!</p>
-                    <ul class="infra-list">
-                        <li><i class="fas fa-campground"></i> Área de Camping</li>
-                        <li><i class="fas fa-water"></i> Cachoeiras e Grutas</li>
-                    </ul>
-                </div>
-                
-                <button class="btn btn-share">
-                    <i class="fab fa-instagram"></i> Compartilhar Desafio!
-                </button>
-            </div>
-        </section>
-        
-        <section id="list-view" class="view hidden">
-            </section>
+                <section id="detail-view" class="view hidden">
+            <div class="hero-image">
+                <button class="btn-back"><i class="fas fa-arrow-left"></i> Voltar</button>
+            </div>
+            
+            <div class="park-content">
+                <h1 class="park-title">PE Ibitipoca</h1>
+                <div class="card status-card">
+                    <button class="btn btn-primary btn-full-width">
+                        <i class="fas fa-qrcode"></i> Escanear QR Code de Check-in
+                    </button>
+                    <p class="status-message">Para validar a visita, escaneie o código na entrada do parque.</p>
+                </div>
+                
+                <div class="tabs-container">
+                    <button class="tab active">Informações</button>
+                    <button class="tab">Trilhas/POIs</button>
+                    <button class="tab">Quizzes</button>
+                </div>
 
-        <section id="badges-view" class="view hidden">
-        </section>
+                <div class="tab-content active">
+                    <h3>Resumo e Infraestrutura</h3>
+                    <p>O Parque Estadual de Ibitipoca é famoso por seus picos, grutas e a icônica Janela do Céu. Acesso limitado, agende antes de visitar!</p>
+                    <ul class="infra-list">
+                        <li><i class="fas fa-campground"></i> Área de Camping</li>
+                        <li><i class="fas fa-water"></i> Cachoeiras e Grutas</li>
+                    </ul>
+                </div>
+                
+                <button class="btn btn-share">
+                    <i class="fab fa-instagram"></i> Compartilhar Desafio!
+                </button>
+            </div>
+        </section>
+        
+                <section id="list-view" class="view hidden">
+            </section>
 
-        <section id="social-view" class="view hidden">
-        </section>
-        
-    </main>
-    
-    <nav class="nav-bar">
-        <a href="#home-view" class="nav-item active"><i class="fas fa-map"></i> Mapa</a>
-        <a href="#list-view" class="nav-item"><i class="fas fa-list"></i> Parques</a>
-        <a href="#badges-view" class="nav-item"><i class="fas fa-medal"></i> Badges</a>
-        <a href="#social-view" class="nav-item"><i class="fas fa-users"></i> Feed</a>
-    </nav>
+                <section id="badges-view" class="view hidden">
+        </section>
 
-    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
-    <script src="app.js"></script> 
+                <section id="social-view" class="view hidden">
+        </section>
+        
+    </main>
+    
+        <nav class="nav-bar">
+        <a href="#home-view" class="nav-item active"><i class="fas fa-map"></i> Mapa</a>
+        <a href="#list-view" class="nav-item"><i class="fas fa-list"></i> Parques</a>
+        <a href="#badges-view" class="nav-item"><i class="fas fa-medal"></i> Badges</a>
+        <a href="#social-view" class="nav-item"><i class="fas fa-users"></i> Feed</a>
+    </nav>
+
+        <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <script src="app.js"></script> 
 </body>
 </html>
